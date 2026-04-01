@@ -1,5 +1,9 @@
 # 对比分析
 
+> 市面上有好几个"简化版 Claude Code"项目，我们和它们有什么不同？
+
+![技能注入](../comics/comic_s05_skills.png)
+
 ## 现有 Claude Code 蒸馏/复现项目
 
 ### 1. miniclaudecode_typescript (本项目)
@@ -95,8 +99,18 @@ Python 蒸馏会引入语言差异，无法直接对照原版。
 
 ### 三层压缩 vs 双层压缩
 
+![三层压缩](../comics/comic_s06_compact.png)
+
 learn-claude-code 实现了 micro + manual 两层。本项目实现了完整的三层：
 
 1. **microCompact** — 被动，每轮自动替换旧结果
 2. **autoCompact** — 自动，token 超阈值时触发摘要
 3. **manualCompact** — 手动，用户/工具显式触发完整压缩
+
+### 教学漫画
+
+本项目配套 13 张哆啦A梦风格中文教学漫画，覆盖每个阶段的核心概念。用漫画辅助理解技术概念，降低学习门槛。其他项目均无此特色。
+
+### 在线文档
+
+通过 Docsify 搭建的在线阅读站，支持搜索、代码高亮、侧边栏导航，方便随时随地学习。访问地址：[https://bcefghj.github.io/miniclaudecode_typescript/](https://bcefghj.github.io/miniclaudecode_typescript/)

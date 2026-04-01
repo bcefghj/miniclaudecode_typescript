@@ -1,0 +1,23 @@
+- **入门**
+  - [首页](/)
+  - [快速开始](quickstart.md)
+
+- **分阶段教程**
+  - [s01 核心循环](tutorials/s01-agent-loop.md)
+  - [s02 工具系统](tutorials/s02-tools.md)
+  - [s03 先计划再执行](tutorials/s03-todo.md)
+  - [s04 子Agent委托](tutorials/s04-subagent.md)
+  - [s05 技能注入](tutorials/s05-skills.md)
+  - [s06 三层压缩](tutorials/s06-compact.md)
+  - [s07 文件任务图](tutorials/s07-tasks.md)
+  - [s08 后台并发](tutorials/s08-background.md)
+  - [s09 Agent团队](tutorials/s09-teams.md)
+  - [s10 团队协议](tutorials/s10-protocols.md)
+  - [s11 自主Agent](tutorials/s11-autonomous.md)
+  - [s12 Git隔离](tutorials/s12-worktree.md)
+
+- **深入理解**
+  - [架构对比](architecture.md)
+  - [蒸馏方法](distillation-guide.md)
+  - [功能对比](comparison.md)
+  - [源码映射表](source-mapping.md)
