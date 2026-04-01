@@ -1,144 +1,108 @@
-# 蒸馏指南：从 51 万行到 800 行
+# 蒸馏方法论 (Distillation Guide)
 
 ## 什么是"蒸馏"？
 
-蒸馏（Distillation）是从大型复杂系统中提取核心模式和本质逻辑的过程。
-不是复制代码，而是理解架构意图后用最简方式重新表达。
+蒸馏 (Distillation) 是从复杂系统中提取核心模式的过程。就像从一瓶酒中蒸馏出酒精——去掉水分、杂质，保留精华。
+
+```
+Claude Code (512,664 行)
+    │
+    │  蒸馏过程
+    │  - 去掉错误处理的冗余层
+    │  - 合并抽象层次
+    │  - 内联依赖注入
+    │  - 保留核心算法模式
+    │
+    ▼
+miniclaudecode (~4,250 行)
+    每一行都对应原版的核心逻辑
+```
 
 ## 蒸馏步骤
 
-### 第一步：识别核心循环
+### Step 1: 找到核心循环
 
-Claude Code 的心脏是 `query.ts` 中的 `queryLoop` 函数（~1730行）。
-去掉所有边缘情况处理，核心只有：
+一切 AI Agent 的核心是同一个循环：
 
 ```typescript
-// 原版 query.ts 的本质（1730行 → 15行）
 while (true) {
-  yield { type: 'stream_request_start' };
-  for await (const message of callModel(messages, tools)) {
-    // 收集 assistant 消息和 tool_use 块
-  }
-  if (没有 tool_use) return;
-  toolResults = await runTools(toolUseBlocks);
-  messages = [...messages, ...assistantMessages, ...toolResults];
+  response = await callModel(messages);
+  if (response.stop_reason !== "tool_use") break;
+  results = await executeTools(response.tool_calls);
+  messages.push(results);
 }
 ```
 
-**被去掉的内容**：
-- GrowthBook 特性开关 (~100行)
-- 自动/反应式压缩 (~200行)
-- 历史剪切 (HISTORY_SNIP) (~50行)
-- 上下文折叠 (CONTEXT_COLLAPSE) (~80行)
-- Token 预算续写 (~100行)
-- 模型回退 (FallbackTriggeredError) (~150行)
-- Stop hooks (~80行)
-- 工具使用摘要 (Haiku) (~100行)
-- 流式工具执行器集成 (~200行)
-- 各种 analytics/telemetry (~300行)
+原版在 `query.ts` 用了 1730 行来做这件事（加上重试、流式、错误处理、hooks）。蒸馏后只需 ~20 行。
 
-### 第二步：简化 API 层
+### Step 2: 识别工具模式
 
-原版 `services/api/claude.ts`（~3420行）处理：
-- 原始 SSE 流解析（避免 O(n^2) JSON 拼接）
-- VCR 录制/回放
-- Bedrock/Vertex 兼容
-- 提示缓存断点策略
-- 空闲看门狗
-- 非流式回退
-- advisor 模型
-- 多种 beta 特性
-
-蒸馏版直接使用 SDK 的 `.stream()` 方法（SDK 内部已处理流解析）：
+原版的每个工具都是一个类，有 `getInputSchema()`、`checkPermissions()`、`call()` 等方法。蒸馏发现核心模式其实是：
 
 ```typescript
-// 3420行 → 20行
-const stream = client.messages.stream({
-  model, max_tokens, system, tools, messages
-});
-stream.on("text", onText);
-return await stream.finalMessage();
+const HANDLERS: Record<string, (input: any) => string> = {
+  Bash: (i) => execSync(i.command),
+  Read: (i) => readFileSync(i.path),
+  // ...
+};
 ```
 
-### 第三步：精简工具类型
+一个 dispatch map 就够了。
 
-原版 `Tool.ts`（~793行）定义了庞大的工具接口，包括：
-- React 渲染方法（~15个）
-- MCP/LSP 元数据
-- Auto classifier 接口
-- ToolSearch/defer 机制
-- 进度报告系统
-- Observable 回填
+### Step 3: 提取状态管理
 
-蒸馏为 5 个字段的接口：
+原版有复杂的 AppState、Redux-like 状态管理。蒸馏后发现核心状态就是：
 
-```typescript
-interface Tool {
-  name: string;
-  description: string;
-  inputSchema: object;
-  isReadOnly?: boolean;
-  execute(input): Promise<ToolResult>;
-}
+- `messages[]` — 对话历史
+- `todos[]` — 任务列表
+- `tasks/` — 持久化任务文件
+- `.team/inbox/` — 团队消息
+
+### Step 4: 分层递增
+
+把功能按依赖关系排列，每层只加一个新概念：
+
 ```
-
-### 第四步：简化权限
-
-原版权限系统跨越 ~2000 行，包括：
-- 6+ 种权限模式
-- 多源规则合并（user/project/managed/session/command）
-- Auto classifier（AI 判断是否安全）
-- 沙箱集成
-- 域名/路径白名单
-
-蒸馏为三档决策：
-```typescript
-function check(tool, input): "allow" | "deny" | "ask"
+s01: while + tool        (基础)
+s02: + dispatch map      (扩展)
+s03: + planning          (规划)
+s04: + delegation        (委托)
+s05: + knowledge         (知识)
+s06: + memory mgmt       (记忆)
+s07: + task graph         (任务)
+s08: + concurrency        (并发)
+s09: + multi-agent       (团队)
+s10: + negotiation       (协商)
+s11: + autonomy          (自主)
+s12: + isolation         (隔离)
 ```
-
-### 第五步：去掉非核心子系统
-
-以下子系统各自数千行，但不影响核心 Agent 功能：
-
-| 去掉的子系统 | 大致行数 | 原因 |
-|-------------|---------|------|
-| React/Ink TUI | ~50,000 | 用 readline 替代 |
-| MCP (Model Context Protocol) | ~30,000 | 扩展协议，非核心 |
-| Remote/Bridge | ~20,000 | 远程会话 |
-| Coordinator/Swarm | ~15,000 | 多 Agent 编排 |
-| Skills/Plugins | ~10,000 | 简化为文件加载 |
-| Session/Persistence | ~8,000 | 用 messages 数组 |
-| Hooks 系统 | ~5,000 | 简化为权限检查 |
-| 遥测/分析 | ~5,000 | 去掉 |
-| Vim/Keybindings | ~3,000 | 去掉 |
-| Voice/语音 | ~3,000 | 去掉 |
 
 ## 蒸馏比例
 
-| 组件 | 原版行数 | 蒸馏行数 | 压缩比 |
-|------|---------|---------|--------|
-| Agent 循环 | ~1,730 | ~166 | 10:1 |
-| API 层 | ~3,420 | ~83 | 41:1 |
-| 工具类型 | ~793 | ~59 | 13:1 |
-| 工具注册 | ~390 | ~26 | 15:1 |
-| 权限系统 | ~2,000 | ~74 | 27:1 |
-| 工具实现 | ~5,000+ | ~344 | 15:1 |
-| **总计** | **512,664** | **2,635** | **195:1** |
+不同模块的蒸馏难度不同：
 
-## 保留了什么
+| 模块 | 原版行数 | 蒸馏行数 | 蒸馏比 | 原因 |
+|------|---------|---------|--------|------|
+| Agent Loop | 1,825 | 100 | 18:1 | 核心模式极简，大量是错误处理 |
+| Tools | 2,320 | 200 | 11.6:1 | 类→函数，移除权限层 |
+| Compact | 2,786 | 400 | 7:1 | 三层策略明确，简化 token 计算 |
+| Autonomous | 795 | 500 | 1.6:1 | 逻辑本身就紧凑 |
 
-1. **Agent 循环模式** — while + callModel + tool_use 判断 + 工具执行
-2. **流式输出** — 实时文本流 + 事件驱动
-3. **工具注册机制** — 名称 + schema + 执行函数
-4. **权限三档决策** — allow / deny / ask
-5. **上下文管理** — messages 作为唯一真相 + 压缩
-6. **子 Agent** — Task 工具 + 隔离上下文
-7. **Todo 系统** — 显式任务规划
+## 你能学到什么？
 
-## 丢弃了什么
+通过蒸馏学习，你会理解：
 
-1. UI 渲染层（TUI 组件、对话框、进度条）
-2. 扩展协议（MCP、LSP、plugin）
-3. 基础设施（远程、VCR、遥测、迁移）
-4. 平台特定（sandbox、PowerShell、notebook）
-5. 高级特性（KAIROS、BUDDY、Coordinator、Worktree）
+1. **大型系统的核心往往很小** — 500K 行的核心循环就 20 行
+2. **抽象是为了扩展** — 原版的类层次为了插件系统，教学可以用函数
+3. **状态管理是关键** — 理解 messages[]、tasks、inbox 的数据流
+4. **并发用消息传递** — 不共享内存，用文件邮箱通信
+5. **隔离用 worktree** — Git 原生支持并行工作目录
+
+## 如何自己蒸馏一个系统？
+
+1. **找到入口点** — 哪个函数启动了一切？
+2. **画调用图** — 入口函数调用了哪些函数？
+3. **识别核心 vs 基础设施** — 重试逻辑不是核心，循环结构是核心
+4. **提取类型** — 核心数据结构是什么样的？
+5. **从最小可运行版本开始** — 先让最简版本跑起来
+6. **每次加一个功能** — 每加一个功能就对照原版理解为什么需要它

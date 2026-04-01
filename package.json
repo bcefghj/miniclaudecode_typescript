@@ -1,19 +1,26 @@
 {
   "name": "miniclaudecode_typescript",
   "version": "1.0.0",
-  "description": "Claude Code distilled into ~800 lines of TypeScript — a progressive learning framework",
+  "description": "Claude Code distilled into 12 progressive TypeScript stages — from a while loop to multi-agent teams",
   "type": "module",
-  "main": "dist/v4_full_agent.js",
+  "main": "dist/s12_worktree.js",
   "bin": {
-    "minicc": "dist/v4_full_agent.js"
+    "minicc": "dist/s12_worktree.js"
   },
   "scripts": {
     "build": "tsc",
-    "v0": "npx tsx src/v0_bash_agent.ts",
-    "v1": "npx tsx src/v1_basic_agent.ts",
-    "v2": "npx tsx src/v2_streaming_agent.ts",
-    "v3": "npx tsx src/v3_subagent.ts",
-    "v4": "npx tsx src/v4_full_agent.ts"
+    "s01": "npx tsx src/s01_agent_loop.ts",
+    "s02": "npx tsx src/s02_tools.ts",
+    "s03": "npx tsx src/s03_todo.ts",
+    "s04": "npx tsx src/s04_subagent.ts",
+    "s05": "npx tsx src/s05_skills.ts",
+    "s06": "npx tsx src/s06_compact.ts",
+    "s07": "npx tsx src/s07_tasks.ts",
+    "s08": "npx tsx src/s08_background.ts",
+    "s09": "npx tsx src/s09_teams.ts",
+    "s10": "npx tsx src/s10_protocols.ts",
+    "s11": "npx tsx src/s11_autonomous.ts",
+    "s12": "npx tsx src/s12_worktree.ts"
   },
   "keywords": ["claude-code", "agent", "distillation", "typescript", "ai"],
   "license": "MIT",
