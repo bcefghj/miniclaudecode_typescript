@@ -21,3 +21,7 @@
   - [蒸馏方法](distillation-guide.md)
   - [功能对比](comparison.md)
   - [源码映射表](source-mapping.md)
+
+- **离线下载**
+  - [HTML 完整版](downloads/miniclaudecode_complete.html ':ignore')
+  - [PDF 完整版](downloads/miniclaudecode_complete.pdf ':ignore')

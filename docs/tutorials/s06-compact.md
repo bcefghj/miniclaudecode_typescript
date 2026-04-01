@@ -1,6 +1,6 @@
 # s06 三层压缩 — 让对话永不中断
 
-![s06 三层压缩](../../comics/comic_s06_compact.png)
+![s06 三层压缩](../comics/comic_s06_compact.png)
 
 ## 这一节学什么？
 

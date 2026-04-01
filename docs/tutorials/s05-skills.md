@@ -1,6 +1,6 @@
 # s05 技能注入 — 按需加载专业知识
 
-![s05 技能注入](../../comics/comic_s05_skills.png)
+![s05 技能注入](../comics/comic_s05_skills.png)
 
 ## 这一节学什么？
 

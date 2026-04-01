@@ -1,6 +1,6 @@
 # s01 核心循环 — 一切的起点
 
-![s01 核心循环](../../comics/comic_s01_agent_loop.png)
+![s01 核心循环](../comics/comic_s01_agent_loop.png)
 
 ## 这一节学什么？
 

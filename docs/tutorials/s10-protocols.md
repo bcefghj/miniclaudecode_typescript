@@ -1,6 +1,6 @@
 # s10 团队协议 — 请求-响应协商
 
-![s10 团队协议](../../comics/comic_s10_protocols.png)
+![s10 团队协议](../comics/comic_s10_protocols.png)
 
 ## 这一节学什么？
 

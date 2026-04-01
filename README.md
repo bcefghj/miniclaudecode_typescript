@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Stages](https://img.shields.io/badge/Stages-12-orange)]()
 
-**📖 [在线阅读文档](https://bcefghj.github.io/miniclaudecode_typescript/)**
+**📖 [在线阅读文档](https://bcefghj.github.io/miniclaudecode_typescript/)** | **📥 [HTML离线版](https://bcefghj.github.io/miniclaudecode_typescript/downloads/miniclaudecode_complete.html)** | **📄 [PDF版](https://bcefghj.github.io/miniclaudecode_typescript/downloads/miniclaudecode_complete.pdf)**
 
 ## 这是什么？
 

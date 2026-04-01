@@ -6,7 +6,7 @@
 
 **蒸馏**就像把一本 500 页的教科书浓缩成 12 页的笔记——保留核心思想，去掉冗余细节。
 
-![总览](../comics/comic_s00_overview.png)
+![总览](comics/comic_s00_overview.png)
 
 ## 你需要准备什么？
 

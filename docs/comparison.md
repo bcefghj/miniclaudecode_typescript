@@ -2,7 +2,7 @@
 
 > 市面上有好几个"简化版 Claude Code"项目，我们和它们有什么不同？
 
-![技能注入](../comics/comic_s05_skills.png)
+![技能注入](comics/comic_s05_skills.png)
 
 ## 现有 Claude Code 蒸馏/复现项目
 
@@ -99,7 +99,7 @@ Python 蒸馏会引入语言差异，无法直接对照原版。
 
 ### 三层压缩 vs 双层压缩
 
-![三层压缩](../comics/comic_s06_compact.png)
+![三层压缩](comics/comic_s06_compact.png)
 
 learn-claude-code 实现了 micro + manual 两层。本项目实现了完整的三层：
 

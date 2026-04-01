@@ -1,6 +1,6 @@
 # s12 Git隔离 — Worktree 并行工作空间
 
-![s12 Git隔离](../../comics/comic_s12_worktree.png)
+![s12 Git隔离](../comics/comic_s12_worktree.png)
 
 ## 这一节学什么？
 

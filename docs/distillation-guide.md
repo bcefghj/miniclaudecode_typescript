@@ -1,6 +1,6 @@
 # 蒸馏方法论 (Distillation Guide)
 
-![核心循环](../comics/comic_s01_agent_loop.png)
+![核心循环](comics/comic_s01_agent_loop.png)
 
 ## 什么是"蒸馏"？
 
@@ -104,7 +104,7 @@ s12: + isolation         (隔离)
 
 ## 如何自己蒸馏一个系统？
 
-![工具系统](../comics/comic_s02_tools.png)
+![工具系统](comics/comic_s02_tools.png)
 
 1. **找到入口点** — 哪个函数启动了一切？（比如 Claude Code 的 `query.ts:queryLoop`）
 2. **画调用图** — 入口函数调用了哪些函数？

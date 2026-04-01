@@ -2,7 +2,7 @@
 
 > Claude Code 50万行 TypeScript 源码 → 12 个阶段 → 4,250 行教学代码
 
-![总览](../comics/comic_s00_overview.png)
+![总览](comics/comic_s00_overview.png)
 
 ## 这个项目是什么？
 
@@ -27,18 +27,23 @@
 
 | 阶段 | 主题 | 漫画 |
 |------|------|------|
-| [s01](tutorials/s01-agent-loop.md) | 核心循环 — 一切的起点 | ![](../comics/comic_s01_agent_loop.png ':size=200') |
-| [s02](tutorials/s02-tools.md) | 工具系统 — 分发表模式 | ![](../comics/comic_s02_tools.png ':size=200') |
-| [s03](tutorials/s03-todo.md) | 先计划再执行 | ![](../comics/comic_s03_todo.png ':size=200') |
-| [s04](tutorials/s04-subagent.md) | 子Agent委托 | ![](../comics/comic_s04_subagent.png ':size=200') |
-| [s05](tutorials/s05-skills.md) | 技能注入 | ![](../comics/comic_s05_skills.png ':size=200') |
-| [s06](tutorials/s06-compact.md) | 三层压缩 | ![](../comics/comic_s06_compact.png ':size=200') |
-| [s07](tutorials/s07-tasks.md) | 文件任务图 | ![](../comics/comic_s07_tasks.png ':size=200') |
-| [s08](tutorials/s08-background.md) | 后台并发 | ![](../comics/comic_s08_background.png ':size=200') |
-| [s09](tutorials/s09-teams.md) | Agent团队 | ![](../comics/comic_s09_teams.png ':size=200') |
-| [s10](tutorials/s10-protocols.md) | 团队协议 | ![](../comics/comic_s10_protocols.png ':size=200') |
-| [s11](tutorials/s11-autonomous.md) | 自主Agent | ![](../comics/comic_s11_autonomous.png ':size=200') |
-| [s12](tutorials/s12-worktree.md) | Git隔离 | ![](../comics/comic_s12_worktree.png ':size=200') |
+| [s01](tutorials/s01-agent-loop.md) | 核心循环 — 一切的起点 | ![](comics/comic_s01_agent_loop.png ':size=200') |
+| [s02](tutorials/s02-tools.md) | 工具系统 — 分发表模式 | ![](comics/comic_s02_tools.png ':size=200') |
+| [s03](tutorials/s03-todo.md) | 先计划再执行 | ![](comics/comic_s03_todo.png ':size=200') |
+| [s04](tutorials/s04-subagent.md) | 子Agent委托 | ![](comics/comic_s04_subagent.png ':size=200') |
+| [s05](tutorials/s05-skills.md) | 技能注入 | ![](comics/comic_s05_skills.png ':size=200') |
+| [s06](tutorials/s06-compact.md) | 三层压缩 | ![](comics/comic_s06_compact.png ':size=200') |
+| [s07](tutorials/s07-tasks.md) | 文件任务图 | ![](comics/comic_s07_tasks.png ':size=200') |
+| [s08](tutorials/s08-background.md) | 后台并发 | ![](comics/comic_s08_background.png ':size=200') |
+| [s09](tutorials/s09-teams.md) | Agent团队 | ![](comics/comic_s09_teams.png ':size=200') |
+| [s10](tutorials/s10-protocols.md) | 团队协议 | ![](comics/comic_s10_protocols.png ':size=200') |
+| [s11](tutorials/s11-autonomous.md) | 自主Agent | ![](comics/comic_s11_autonomous.png ':size=200') |
+| [s12](tutorials/s12-worktree.md) | Git隔离 | ![](comics/comic_s12_worktree.png ':size=200') |
+
+## 离线阅读 / 下载
+
+- [完整教程 HTML 版](downloads/miniclaudecode_complete.html ':ignore') — 单文件独立版，含所有图片，可离线阅读
+- [完整教程 PDF 版](downloads/miniclaudecode_complete.pdf ':ignore') — 适合打印或平板阅读
 
 ## 深入理解
 

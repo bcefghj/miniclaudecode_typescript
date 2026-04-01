@@ -1,0 +1,3135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>miniclaudecode_typescript 完整教程</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">miniclaudecode_typescript 完整教程</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#miniclaudecode_typescript"
+id="toc-miniclaudecode_typescript">miniclaudecode_typescript</a>
+<ul>
+<li><a href="#这个项目是什么"
+id="toc-这个项目是什么">这个项目是什么？</a></li>
+<li><a href="#为什么学这个"
+id="toc-为什么学这个">为什么学这个？</a></li>
+<li><a href="#快速开始" id="toc-快速开始">快速开始</a></li>
+<li><a href="#个阶段教程" id="toc-个阶段教程">12 个阶段教程</a></li>
+<li><a href="#离线阅读-下载" id="toc-离线阅读-下载">离线阅读 /
+下载</a></li>
+<li><a href="#深入理解" id="toc-深入理解">深入理解</a></li>
+</ul></li>
+<li><a href="#快速开始-1" id="toc-快速开始-1">快速开始</a>
+<ul>
+<li><a href="#什么是-miniclaudecode_typescript"
+id="toc-什么是-miniclaudecode_typescript">什么是
+miniclaudecode_typescript？</a></li>
+<li><a href="#你需要准备什么"
+id="toc-你需要准备什么">你需要准备什么？</a></li>
+<li><a href="#安装" id="toc-安装">安装</a></li>
+<li><a href="#设置-api-密钥" id="toc-设置-api-密钥">设置 API
+密钥</a></li>
+<li><a href="#运行你的第一个-agent"
+id="toc-运行你的第一个-agent">运行你的第一个 Agent</a></li>
+<li><a href="#阶段学习路线" id="toc-阶段学习路线">12
+阶段学习路线</a></li>
+<li><a href="#常见问题" id="toc-常见问题">常见问题</a></li>
+</ul></li>
+<li><a href="#s01-核心循环-一切的起点"
+id="toc-s01-核心循环-一切的起点">s01 核心循环 — 一切的起点</a>
+<ul>
+<li><a href="#这一节学什么"
+id="toc-这一节学什么">这一节学什么？</a></li>
+<li><a href="#核心概念" id="toc-核心概念">核心概念</a></li>
+<li><a href="#代码逐行讲解" id="toc-代码逐行讲解">代码逐行讲解</a></li>
+<li><a href="#源码映射" id="toc-源码映射">源码映射</a></li>
+<li><a href="#动手试试" id="toc-动手试试">动手试试</a></li>
+<li><a href="#小测验" id="toc-小测验">小测验</a></li>
+</ul></li>
+<li><a href="#s02-工具系统-四个工具搞定-90-编程任务"
+id="toc-s02-工具系统-四个工具搞定-90-编程任务">s02 工具系统 —
+四个工具搞定 90% 编程任务</a>
+<ul>
+<li><a href="#这一节学什么-1"
+id="toc-这一节学什么-1">这一节学什么？</a></li>
+<li><a href="#核心概念分发表"
+id="toc-核心概念分发表">核心概念：分发表</a></li>
+<li><a href="#四大工具详解" id="toc-四大工具详解">四大工具详解</a></li>
+<li><a href="#循环如何分发" id="toc-循环如何分发">循环如何分发</a></li>
+<li><a href="#源码映射-1" id="toc-源码映射-1">源码映射</a></li>
+<li><a href="#动手试试-1" id="toc-动手试试-1">动手试试</a></li>
+<li><a href="#小测验-1" id="toc-小测验-1">小测验</a></li>
+</ul></li>
+<li><a href="#s03-先计划再执行-todowrite-计划工具"
+id="toc-s03-先计划再执行-todowrite-计划工具">s03 先计划再执行 —
+TodoWrite 计划工具</a>
+<ul>
+<li><a href="#这一节学什么-2"
+id="toc-这一节学什么-2">这一节学什么？</a></li>
+<li><a href="#核心概念-1" id="toc-核心概念-1">核心概念</a></li>
+<li><a href="#工具如何改变-agent-行为"
+id="toc-工具如何改变-agent-行为">工具如何改变 Agent 行为</a></li>
+<li><a href="#源码映射-2" id="toc-源码映射-2">源码映射</a></li>
+<li><a href="#动手试试-2" id="toc-动手试试-2">动手试试</a></li>
+<li><a href="#小测验-2" id="toc-小测验-2">小测验</a></li>
+</ul></li>
+<li><a href="#s04-子agent委托-独立上下文的任务分发"
+id="toc-s04-子agent委托-独立上下文的任务分发">s04 子Agent委托 —
+独立上下文的任务分发</a>
+<ul>
+<li><a href="#这一节学什么-3"
+id="toc-这一节学什么-3">这一节学什么？</a></li>
+<li><a href="#核心概念上下文隔离"
+id="toc-核心概念上下文隔离">核心概念：上下文隔离</a></li>
+<li><a href="#新增工具glob-和-grep"
+id="toc-新增工具glob-和-grep">新增工具：Glob 和 Grep</a></li>
+<li><a href="#源码映射-3" id="toc-源码映射-3">源码映射</a></li>
+<li><a href="#动手试试-3" id="toc-动手试试-3">动手试试</a></li>
+<li><a href="#小测验-3" id="toc-小测验-3">小测验</a></li>
+</ul></li>
+<li><a href="#s05-技能注入-按需加载专业知识"
+id="toc-s05-技能注入-按需加载专业知识">s05 技能注入 —
+按需加载专业知识</a>
+<ul>
+<li><a href="#这一节学什么-4"
+id="toc-这一节学什么-4">这一节学什么？</a></li>
+<li><a href="#核心概念-2" id="toc-核心概念-2">核心概念</a></li>
+<li><a href="#为什么不全部放在-system-prompt"
+id="toc-为什么不全部放在-system-prompt">为什么不全部放在 system
+prompt？</a></li>
+<li><a href="#源码映射-4" id="toc-源码映射-4">源码映射</a></li>
+<li><a href="#动手试试-4" id="toc-动手试试-4">动手试试</a></li>
+<li><a href="#小测验-4" id="toc-小测验-4">小测验</a></li>
+</ul></li>
+<li><a href="#s06-三层压缩-让对话永不中断"
+id="toc-s06-三层压缩-让对话永不中断">s06 三层压缩 — 让对话永不中断</a>
+<ul>
+<li><a href="#这一节学什么-5"
+id="toc-这一节学什么-5">这一节学什么？</a></li>
+<li><a href="#问题-1" id="toc-问题-1">问题</a></li>
+<li><a href="#解决方案三层压缩"
+id="toc-解决方案三层压缩">解决方案：三层压缩</a></li>
+<li><a href="#三层协同" id="toc-三层协同">三层协同</a></li>
+<li><a href="#源码映射-5" id="toc-源码映射-5">源码映射</a></li>
+<li><a href="#动手试试-5" id="toc-动手试试-5">动手试试</a></li>
+<li><a href="#小测验-5" id="toc-小测验-5">小测验</a></li>
+</ul></li>
+<li><a href="#s07-文件任务图-dag-依赖管理"
+id="toc-s07-文件任务图-dag-依赖管理">s07 文件任务图 — DAG 依赖管理</a>
+<ul>
+<li><a href="#这一节学什么-6"
+id="toc-这一节学什么-6">这一节学什么？</a></li>
+<li><a href="#核心概念-3" id="toc-核心概念-3">核心概念</a></li>
+<li><a href="#对比-s03-todowrite" id="toc-对比-s03-todowrite">对比 s03
+TodoWrite</a></li>
+<li><a href="#源码映射-6" id="toc-源码映射-6">源码映射</a></li>
+<li><a href="#动手试试-6" id="toc-动手试试-6">动手试试</a></li>
+<li><a href="#小测验-6" id="toc-小测验-6">小测验</a></li>
+</ul></li>
+<li><a href="#s08-后台并发-边等边干别的"
+id="toc-s08-后台并发-边等边干别的">s08 后台并发 — 边等边干别的</a>
+<ul>
+<li><a href="#这一节学什么-7"
+id="toc-这一节学什么-7">这一节学什么？</a></li>
+<li><a href="#核心概念-4" id="toc-核心概念-4">核心概念</a></li>
+<li><a href="#使用场景" id="toc-使用场景">使用场景</a></li>
+<li><a href="#源码映射-7" id="toc-源码映射-7">源码映射</a></li>
+<li><a href="#动手试试-7" id="toc-动手试试-7">动手试试</a></li>
+<li><a href="#小测验-7" id="toc-小测验-7">小测验</a></li>
+</ul></li>
+<li><a href="#s09-agent团队-多agent协作"
+id="toc-s09-agent团队-多agent协作">s09 Agent团队 — 多Agent协作</a>
+<ul>
+<li><a href="#这一节学什么-8"
+id="toc-这一节学什么-8">这一节学什么？</a></li>
+<li><a href="#对比-s04-子agent" id="toc-对比-s04-子agent">对比 s04
+子Agent</a></li>
+<li><a href="#核心概念-5" id="toc-核心概念-5">核心概念</a></li>
+<li><a href="#工作流程" id="toc-工作流程">工作流程</a></li>
+<li><a href="#源码映射-8" id="toc-源码映射-8">源码映射</a></li>
+<li><a href="#动手试试-8" id="toc-动手试试-8">动手试试</a></li>
+<li><a href="#小测验-8" id="toc-小测验-8">小测验</a></li>
+</ul></li>
+<li><a href="#s10-团队协议-请求-响应协商"
+id="toc-s10-团队协议-请求-响应协商">s10 团队协议 — 请求-响应协商</a>
+<ul>
+<li><a href="#这一节学什么-9"
+id="toc-这一节学什么-9">这一节学什么？</a></li>
+<li><a href="#核心概念-6" id="toc-核心概念-6">核心概念</a></li>
+<li><a href="#源码映射-9" id="toc-源码映射-9">源码映射</a></li>
+<li><a href="#动手试试-9" id="toc-动手试试-9">动手试试</a></li>
+<li><a href="#小测验-9" id="toc-小测验-9">小测验</a></li>
+</ul></li>
+<li><a href="#s11-自主agent-不用指派自己找活干"
+id="toc-s11-自主agent-不用指派自己找活干">s11 自主Agent —
+不用指派，自己找活干</a>
+<ul>
+<li><a href="#这一节学什么-10"
+id="toc-这一节学什么-10">这一节学什么？</a></li>
+<li><a href="#核心概念状态机"
+id="toc-核心概念状态机">核心概念：状态机</a></li>
+<li><a href="#完整流程示例" id="toc-完整流程示例">完整流程示例</a></li>
+<li><a href="#源码映射-10" id="toc-源码映射-10">源码映射</a></li>
+<li><a href="#动手试试-10" id="toc-动手试试-10">动手试试</a></li>
+<li><a href="#小测验-10" id="toc-小测验-10">小测验</a></li>
+</ul></li>
+<li><a href="#s12-git隔离-worktree-并行工作空间"
+id="toc-s12-git隔离-worktree-并行工作空间">s12 Git隔离 — Worktree
+并行工作空间</a>
+<ul>
+<li><a href="#这一节学什么-11"
+id="toc-这一节学什么-11">这一节学什么？</a></li>
+<li><a href="#问题-2" id="toc-问题-2">问题</a></li>
+<li><a href="#解决方案git-worktree"
+id="toc-解决方案git-worktree">解决方案：Git Worktree</a></li>
+<li><a href="#核心概念-7" id="toc-核心概念-7">核心概念</a></li>
+<li><a href="#完整工作流" id="toc-完整工作流">完整工作流</a></li>
+<li><a href="#对比总结12个阶段的演进"
+id="toc-对比总结12个阶段的演进">对比总结：12个阶段的演进</a></li>
+<li><a href="#源码映射-11" id="toc-源码映射-11">源码映射</a></li>
+<li><a href="#动手试试-11" id="toc-动手试试-11">动手试试</a></li>
+<li><a href="#小测验-11" id="toc-小测验-11">小测验</a></li>
+<li><a href="#恭喜你已经完成了全部-12-个阶段的学习"
+id="toc-恭喜你已经完成了全部-12-个阶段的学习">恭喜！你已经完成了全部 12
+个阶段的学习！</a></li>
+</ul></li>
+<li><a href="#架构说明" id="toc-架构说明">架构说明</a>
+<ul>
+<li><a href="#白话版claude-code-是怎么工作的"
+id="toc-白话版claude-code-是怎么工作的">白话版：Claude Code
+是怎么工作的？</a></li>
+<li><a href="#claude-code-原版架构-512664-行"
+id="toc-claude-code-原版架构-512664-行">Claude Code 原版架构 (512,664
+行)</a></li>
+<li><a href="#miniclaudecode-蒸馏架构-4250-行"
+id="toc-miniclaudecode-蒸馏架构-4250-行">miniclaudecode 蒸馏架构 (~4,250
+行)</a></li>
+<li><a href="#核心数据流" id="toc-核心数据流">核心数据流</a></li>
+<li><a href="#多-agent-架构-s09-s12" id="toc-多-agent-架构-s09-s12">多
+Agent 架构 (s09-s12)</a></li>
+<li><a href="#白话版单-agent-的数据流"
+id="toc-白话版单-agent-的数据流">白话版：单 Agent 的数据流</a></li>
+<li><a href="#白话版多-agent-的架构"
+id="toc-白话版多-agent-的架构">白话版：多 Agent 的架构</a></li>
+<li><a href="#蒸馏原则" id="toc-蒸馏原则">蒸馏原则</a></li>
+</ul></li>
+<li><a href="#蒸馏方法论-distillation-guide"
+id="toc-蒸馏方法论-distillation-guide">蒸馏方法论 (Distillation
+Guide)</a>
+<ul>
+<li><a href="#什么是蒸馏" id="toc-什么是蒸馏">什么是”蒸馏”？</a></li>
+<li><a href="#蒸馏步骤" id="toc-蒸馏步骤">蒸馏步骤</a></li>
+<li><a href="#蒸馏比例" id="toc-蒸馏比例">蒸馏比例</a></li>
+<li><a href="#你能学到什么"
+id="toc-你能学到什么">你能学到什么？</a></li>
+<li><a href="#如何自己蒸馏一个系统"
+id="toc-如何自己蒸馏一个系统">如何自己蒸馏一个系统？</a></li>
+</ul></li>
+<li><a href="#对比分析" id="toc-对比分析">对比分析</a>
+<ul>
+<li><a href="#现有-claude-code-蒸馏复现项目"
+id="toc-现有-claude-code-蒸馏复现项目">现有 Claude Code
+蒸馏/复现项目</a></li>
+<li><a href="#功能对比矩阵" id="toc-功能对比矩阵">功能对比矩阵</a></li>
+<li><a href="#独家优势详解" id="toc-独家优势详解">独家优势详解</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="miniclaudecode_typescript">miniclaudecode_typescript</h1>
+<blockquote>
+<p>Claude Code 50万行 TypeScript 源码 → 12 个阶段 → 4,250 行教学代码</p>
+</blockquote>
+<figure>
+<img src="comics/comic_s00_overview.png" alt="总览" />
+<figcaption aria-hidden="true">总览</figcaption>
+</figure>
+<h2 id="这个项目是什么">这个项目是什么？</h2>
+<p><strong>用最简单的话说</strong>：Claude Code 是 Anthropic 做的 AI
+编程助手，有 50 多万行 TypeScript
+代码。这个项目把它的核心架构<strong>蒸馏</strong>成 12
+个小程序，每个只有几百行，让你从零理解 AI Agent 是怎么工作的。</p>
+<p><strong>蒸馏</strong>就像把一本 500 页的教科书浓缩成 12
+页的笔记——保留核心思想，去掉冗余细节。</p>
+<h2 id="为什么学这个">为什么学这个？</h2>
+<ul>
+<li>想了解 Claude Code / Cursor / AI 编程助手是怎么工作的</li>
+<li>想自己做一个 AI Agent</li>
+<li>想从源码层面理解 AI Agent 架构</li>
+<li>找工作时需要了解 AI Agent 系统设计</li>
+</ul>
+<h2 id="快速开始">快速开始</h2>
+<p>👉 <a href="quickstart.md">快速开始指南</a></p>
+<h2 id="个阶段教程">12 个阶段教程</h2>
+<p>每个阶段都有配套的哆啦A梦漫画、逐行代码讲解、源码映射和动手练习：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>阶段</th>
+<th>主题</th>
+<th>漫画</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="tutorials/s01-agent-loop.md">s01</a></td>
+<td>核心循环 — 一切的起点</td>
+<td><img src="comics/comic_s01_agent_loop.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s02-tools.md">s02</a></td>
+<td>工具系统 — 分发表模式</td>
+<td><img src="comics/comic_s02_tools.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s03-todo.md">s03</a></td>
+<td>先计划再执行</td>
+<td><img src="comics/comic_s03_todo.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s04-subagent.md">s04</a></td>
+<td>子Agent委托</td>
+<td><img src="comics/comic_s04_subagent.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s05-skills.md">s05</a></td>
+<td>技能注入</td>
+<td><img src="comics/comic_s05_skills.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s06-compact.md">s06</a></td>
+<td>三层压缩</td>
+<td><img src="comics/comic_s06_compact.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s07-tasks.md">s07</a></td>
+<td>文件任务图</td>
+<td><img src="comics/comic_s07_tasks.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s08-background.md">s08</a></td>
+<td>后台并发</td>
+<td><img src="comics/comic_s08_background.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s09-teams.md">s09</a></td>
+<td>Agent团队</td>
+<td><img src="comics/comic_s09_teams.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s10-protocols.md">s10</a></td>
+<td>团队协议</td>
+<td><img src="comics/comic_s10_protocols.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s11-autonomous.md">s11</a></td>
+<td>自主Agent</td>
+<td><img src="comics/comic_s11_autonomous.png" title=":size=200" /></td>
+</tr>
+<tr>
+<td><a href="tutorials/s12-worktree.md">s12</a></td>
+<td>Git隔离</td>
+<td><img src="comics/comic_s12_worktree.png" title=":size=200" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="离线阅读-下载">离线阅读 / 下载</h2>
+<ul>
+<li><a href="downloads/miniclaudecode_complete.html"
+title=":ignore">完整教程 HTML 版</a> —
+单文件独立版，含所有图片，可离线阅读</li>
+<li><a href="downloads/miniclaudecode_complete.pdf"
+title=":ignore">完整教程 PDF 版</a> — 适合打印或平板阅读</li>
+</ul>
+<h2 id="深入理解">深入理解</h2>
+<ul>
+<li><a href="architecture.md">架构对比</a> — 原版 vs
+蒸馏版的架构对照</li>
+<li><a href="distillation-guide.md">蒸馏方法</a> — 如何从 50
+万行代码提取核心</li>
+<li><a href="comparison.md">功能对比</a> — 与其他同类项目的对比</li>
+<li><a href="source-mapping.md">源码映射表</a> —
+每一行蒸馏代码对应原版哪里（独家）</li>
+</ul>
+<h1 id="快速开始-1">快速开始</h1>
+<h2 id="什么是-miniclaudecode_typescript">什么是
+miniclaudecode_typescript？</h2>
+<p>这是一个<strong>教学项目</strong>，把 Claude Code（Anthropic 的 AI
+编程助手，50 万行 TypeScript 源码）蒸馏成 12
+个循序渐进的小程序，每个只有几百行代码。</p>
+<p><strong>蒸馏</strong>就像把一本 500 页的教科书浓缩成 12
+页的笔记——保留核心思想，去掉冗余细节。</p>
+<figure>
+<img src="comics/comic_s00_overview.png" alt="总览" />
+<figcaption aria-hidden="true">总览</figcaption>
+</figure>
+<h2 id="你需要准备什么">你需要准备什么？</h2>
+<h3 id="基础知识">基础知识</h3>
+<ul>
+<li>会写基本的 TypeScript /
+JavaScript（知道什么是函数、数组、对象就行）</li>
+<li>了解命令行基本操作（cd、ls、npm）</li>
+<li>有一个 Anthropic API 密钥（<a
+href="https://console.anthropic.com/">申请地址</a>）</li>
+</ul>
+<h3 id="环境要求">环境要求</h3>
+<ul>
+<li><strong>Node.js</strong> 18+（<a
+href="https://nodejs.org/">下载地址</a>）</li>
+<li><strong>npm</strong>（Node.js 自带）</li>
+<li><strong>Git</strong>（s12 需要）</li>
+</ul>
+<h2 id="安装">安装</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 克隆项目</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/bcefghj/miniclaudecode_typescript.git</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> miniclaudecode_typescript</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 安装依赖</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
+<h2 id="设置-api-密钥">设置 API 密钥</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_API_KEY</span><span class="op">=</span><span class="st">&quot;sk-ant-你的密钥&quot;</span></span></code></pre></div>
+<h2 id="运行你的第一个-agent">运行你的第一个 Agent</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s01_agent_loop.ts</span></code></pre></div>
+<p>你会看到一个命令行提示符 <code>&gt;</code>，输入任何问题，Agent
+就会帮你执行命令来回答。</p>
+<p>试试输入：</p>
+<pre><code>&gt; 帮我看看当前目录有什么文件</code></pre>
+<p>Agent 会自动调用 <code>ls</code> 命令，然后用中文告诉你结果。</p>
+<h2 id="阶段学习路线">12 阶段学习路线</h2>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 23%" />
+<col style="width: 32%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>阶段</th>
+<th>学什么</th>
+<th>一句话总结</th>
+<th>运行命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s01</td>
+<td>核心循环</td>
+<td>一个 while 循环 + 一个 Bash 工具</td>
+<td><code>npx tsx src/s01_agent_loop.ts</code></td>
+</tr>
+<tr>
+<td>s02</td>
+<td>工具系统</td>
+<td>分发表模式，4 个工具</td>
+<td><code>npx tsx src/s02_tools.ts</code></td>
+</tr>
+<tr>
+<td>s03</td>
+<td>计划</td>
+<td>TodoWrite 先列计划再执行</td>
+<td><code>npx tsx src/s03_todo.ts</code></td>
+</tr>
+<tr>
+<td>s04</td>
+<td>子Agent</td>
+<td>独立上下文的任务委托</td>
+<td><code>npx tsx src/s04_subagent.ts</code></td>
+</tr>
+<tr>
+<td>s05</td>
+<td>技能</td>
+<td>按需加载 SKILL.md</td>
+<td><code>npx tsx src/s05_skills.ts</code></td>
+</tr>
+<tr>
+<td>s06</td>
+<td>压缩</td>
+<td>三层上下文压缩</td>
+<td><code>npx tsx src/s06_compact.ts</code></td>
+</tr>
+<tr>
+<td>s07</td>
+<td>任务图</td>
+<td>文件存储 + DAG 依赖</td>
+<td><code>npx tsx src/s07_tasks.ts</code></td>
+</tr>
+<tr>
+<td>s08</td>
+<td>后台</td>
+<td>非阻塞执行</td>
+<td><code>npx tsx src/s08_background.ts</code></td>
+</tr>
+<tr>
+<td>s09</td>
+<td>团队</td>
+<td>异步邮箱通信</td>
+<td><code>npx tsx src/s09_teams.ts</code></td>
+</tr>
+<tr>
+<td>s10</td>
+<td>协议</td>
+<td>请求-响应审批</td>
+<td><code>npx tsx src/s10_protocols.ts</code></td>
+</tr>
+<tr>
+<td>s11</td>
+<td>自主</td>
+<td>自动认领任务</td>
+<td><code>npx tsx src/s11_autonomous.ts</code></td>
+</tr>
+<tr>
+<td>s12</td>
+<td>隔离</td>
+<td>Git Worktree</td>
+<td><code>npx tsx src/s12_worktree.ts</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>建议</strong>：按顺序学习 s01 →
+s12，每个阶段都在前一个基础上添加新功能。</p>
+<h2 id="常见问题">常见问题</h2>
+<h3 id="q-需要花多少钱">Q: 需要花多少钱？</h3>
+<p>每次运行会调用 Claude API，费用取决于对话长度。一般调试一个阶段大约花
+$0.01-0.10。</p>
+<h3 id="q-可以用其他模型吗">Q: 可以用其他模型吗？</h3>
+<p>可以！设置环境变量：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">MINICC_MODEL</span><span class="op">=</span><span class="st">&quot;claude-haiku-4-20250514&quot;</span>  <span class="co"># 更便宜的模型</span></span></code></pre></div>
+<h3 id="q-s09-s12-的多agent会不会很贵">Q: s09-s12
+的多Agent会不会很贵？</h3>
+<p>会比单Agent贵，因为多个Agent各自调用API。建议先用 s01-s08
+学习基础，s09-s12 理解概念即可。</p>
+<hr />
+<blockquote>
+<p>准备好了？从 <a href="tutorials/s01-agent-loop.md">s01 核心循环</a>
+开始吧！</p>
+</blockquote>
+<h1 id="s01-核心循环-一切的起点">s01 核心循环 — 一切的起点</h1>
+<figure>
+<img src="../comics/comic_s01_agent_loop.png" alt="s01 核心循环" />
+<figcaption aria-hidden="true">s01 核心循环</figcaption>
+</figure>
+<h2 id="这一节学什么">这一节学什么？</h2>
+<p><strong>用最简单的话说</strong>：AI Agent
+就是一个”死循环”——不断地问模型、执行工具、再问模型，直到模型说”我搞定了”。</p>
+<p>你可能以为 Claude Code 这种 50
+万行代码的系统很复杂。但它的核心？其实就是一个 <code>while(true)</code>
+循环。</p>
+<p>本节只用 <strong>约 100 行 TypeScript</strong>，就能做出一个能执行
+Shell 命令的 AI Agent。</p>
+<h2 id="核心概念">核心概念</h2>
+<h3 id="什么是-agent">什么是 Agent？</h3>
+<p>Agent 不是一个普通的聊天机器人。普通聊天机器人就是”你问我答”。Agent
+多了一个能力：<strong>它可以使用工具</strong>。</p>
+<p>比如你说”帮我看看当前目录有什么文件”，Agent 会： 1. 理解你的意思 2.
+决定调用 <code>ls</code> 命令 3. 拿到结果 4. 把结果用人话告诉你</p>
+<h3 id="核心循环流程">核心循环流程</h3>
+<pre><code>用户输入 → while(true) {
+  ① 调用模型（发送对话历史 + 可用工具）
+  ② 模型返回：
+     - 如果是文字 → 打印给用户，结束循环
+     - 如果是工具调用 → 执行工具，把结果加入对话历史
+  ③ 继续循环
+}</code></pre>
+<h2 id="代码逐行讲解">代码逐行讲解</h2>
+<h3 id="初始化">1. 初始化</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Anthropic <span class="im">from</span> <span class="st">&quot;@anthropic-ai/sdk&quot;</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { execSync } <span class="im">from</span> <span class="st">&quot;child_process&quot;</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="op">*</span> <span class="im">as</span> readline <span class="im">from</span> <span class="st">&quot;readline&quot;</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> client <span class="op">=</span> <span class="kw">new</span> <span class="fu">Anthropic</span>()<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> MODEL <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">MINICC_MODEL</span> <span class="op">||</span> <span class="st">&quot;claude-sonnet-4-20250514&quot;</span><span class="op">;</span></span></code></pre></div>
+<ul>
+<li><code>@anthropic-ai/sdk</code>：官方 SDK，帮你调用 Claude API</li>
+<li><code>execSync</code>：Node.js 内置的”执行 Shell 命令”函数</li>
+<li><code>readline</code>：Node.js 内置的命令行输入工具</li>
+<li><code>client</code>：API 客户端实例，它会自动读取环境变量
+<code>ANTHROPIC_API_KEY</code></li>
+</ul>
+<h3 id="定义唯一的工具bash">2. 定义唯一的工具：Bash</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> TOOLS<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">Tool</span>[] <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    name<span class="op">:</span> <span class="st">&quot;Bash&quot;</span><span class="op">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    description<span class="op">:</span> <span class="st">&quot;Run a shell command and return stdout/stderr.&quot;</span><span class="op">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    input_schema<span class="op">:</span> {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      type<span class="op">:</span> <span class="st">&quot;object&quot;</span><span class="op">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      properties<span class="op">:</span> {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        command<span class="op">:</span> { type<span class="op">:</span> <span class="st">&quot;string&quot;</span><span class="op">,</span> description<span class="op">:</span> <span class="st">&quot;The bash command to execute&quot;</span> }<span class="op">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      required<span class="op">:</span> [<span class="st">&quot;command&quot;</span>]<span class="op">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span></code></pre></div>
+<p>这就是”告诉模型你有什么工具可以用”。格式遵循 JSON
+Schema。模型会根据这个描述来决定什么时候调用什么工具。</p>
+<h3 id="工具执行函数">3. 工具执行函数</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">runBash</span>(command<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">execSync</span>(command<span class="op">,</span> {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      encoding<span class="op">:</span> <span class="st">&quot;utf-8&quot;</span><span class="op">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      timeout<span class="op">:</span> <span class="dv">30_000</span><span class="op">,</span>     <span class="co">// 超时 30 秒</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      cwd<span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>()<span class="op">,</span>  <span class="co">// 在当前目录执行</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">10_000</span>)<span class="op">;</span>   <span class="co">// 最多返回 1 万字符</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (e<span class="op">:</span> <span class="dt">unknown</span>) {</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> err <span class="op">=</span> e <span class="im">as</span> { stderr<span class="op">?:</span> <span class="dt">string</span><span class="op">;</span> message<span class="op">?:</span> <span class="dt">string</span> }<span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`Error: </span><span class="sc">${</span>err<span class="op">.</span><span class="at">stderr</span> <span class="op">||</span> err<span class="op">.</span><span class="at">message</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>注意几个安全措施： - <strong>超时保护</strong>：防止命令卡住 -
+<strong>输出截断</strong>：防止返回太多内容浪费 token -
+<strong>错误捕获</strong>：命令失败也不会崩溃</p>
+<h3 id="核心agent-循环">4. 核心：Agent 循环</h3>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">agentLoop</span>(query<span class="op">:</span> <span class="dt">string</span>) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> messages<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">MessageParam</span>[] <span class="op">=</span> [</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    { role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span> content<span class="op">:</span> query }<span class="op">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ① 调用模型</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> client<span class="op">.</span><span class="at">messages</span><span class="op">.</span><span class="fu">create</span>({</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      model<span class="op">:</span> MODEL<span class="op">,</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      max_tokens<span class="op">:</span> <span class="dv">4096</span><span class="op">,</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      system<span class="op">:</span> <span class="st">&quot;You are a coding assistant. Use the Bash tool to help the user.&quot;</span><span class="op">,</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      tools<span class="op">:</span> TOOLS<span class="op">,</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      messages<span class="op">,</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 把模型的回复加入对话历史</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">.</span><span class="fu">push</span>({ role<span class="op">:</span> <span class="st">&quot;assistant&quot;</span><span class="op">,</span> content<span class="op">:</span> response<span class="op">.</span><span class="at">content</span> })<span class="op">;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ② 检查退出条件：模型没有调用工具 → 结束</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (response<span class="op">.</span><span class="at">stop_reason</span> <span class="op">!==</span> <span class="st">&quot;tool_use&quot;</span>) {</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> text <span class="op">=</span> response<span class="op">.</span><span class="at">content</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">filter</span>((b)<span class="op">:</span> b <span class="kw">is</span> Anthropic<span class="op">.</span><span class="at">TextBlock</span> <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">type</span> <span class="op">===</span> <span class="st">&quot;text&quot;</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">map</span>((b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">text</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)<span class="op">;</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(text)<span class="op">;</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ③ 执行工具，收集结果</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> results<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">ToolResultBlockParam</span>[] <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> block <span class="kw">of</span> response<span class="op">.</span><span class="at">content</span>) {</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (block<span class="op">.</span><span class="at">type</span> <span class="op">===</span> <span class="st">&quot;tool_use&quot;</span>) {</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> { command } <span class="op">=</span> block<span class="op">.</span><span class="at">input</span> <span class="im">as</span> { command<span class="op">:</span> <span class="dt">string</span> }<span class="op">;</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`$ </span><span class="sc">${</span>command<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> output <span class="op">=</span> <span class="fu">runBash</span>(command)<span class="op">;</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        results<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>          type<span class="op">:</span> <span class="st">&quot;tool_result&quot;</span><span class="op">,</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>          tool_use_id<span class="op">:</span> block<span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>          content<span class="op">:</span> output<span class="op">,</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 把工具结果加入对话历史</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">.</span><span class="fu">push</span>({ role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span> content<span class="op">:</span> results })<span class="op">;</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 回到循环顶部 → 继续调用模型</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>这就是整个 Agent 的核心！</strong> 所有后续的 s02-s12
+都是在这个循环基础上叠加功能。</p>
+<h3 id="关键理解">关键理解</h3>
+<p><code>messages</code> 数组就像一个”对话记忆”：</p>
+<pre><code>[user] &quot;帮我看看目录&quot;
+[assistant] tool_use: Bash({command: &quot;ls&quot;})
+[user] tool_result: &quot;file1.ts\nfile2.ts&quot;
+[assistant] &quot;当前目录有 file1.ts 和 file2.ts 两个文件&quot;</code></pre>
+<p>每一轮循环，模型都能看到完整的对话历史，包括之前所有的工具调用和结果。</p>
+<h2 id="源码映射">源码映射</h2>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 50%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agentLoop()</code></td>
+<td><code>query.ts:queryLoop</code></td>
+<td>1,730 行</td>
+</tr>
+<tr>
+<td><code>messages[]</code></td>
+<td><code>types/messages.ts</code></td>
+<td>95 行</td>
+</tr>
+<tr>
+<td><code>while(true)+break</code></td>
+<td><code>for(;;) { if stop_reason≠tool_use break }</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>1,825 → ~100 行 (18:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试">动手试试</h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 安装依赖</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> miniclaudecode_typescript</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置 API Key</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_API_KEY</span><span class="op">=</span><span class="st">&quot;你的密钥&quot;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 运行 s01</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s01_agent_loop.ts</span></code></pre></div>
+<p>然后试试输入： - <code>帮我看看当前目录有什么文件</code> -
+<code>创建一个 hello.txt 文件，内容写 Hello World</code> -
+<code>查看系统信息</code></p>
+<h2 id="小测验">小测验</h2>
+<ol type="1">
+<li><strong>如果模型永远不停止调用工具会怎样？</strong>
+提示：看看循环有没有最大次数限制？</li>
+<li><strong>为什么 <code>tool_result</code> 要放在
+<code>role: "user"</code> 里？</strong> 提示：想想 Claude API
+的消息格式要求。</li>
+<li><strong>如果把 <code>timeout: 30_000</code>
+去掉，可能会发生什么？</strong></li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s02-tools.md">s02 工具系统</a> — 从 1 个工具到 4
+个工具，学习分发表模式</p>
+</blockquote>
+<h1 id="s02-工具系统-四个工具搞定-90-编程任务">s02 工具系统 —
+四个工具搞定 90% 编程任务</h1>
+<figure>
+<img src="../comics/comic_s02_tools.png" alt="s02 工具系统" />
+<figcaption aria-hidden="true">s02 工具系统</figcaption>
+</figure>
+<h2 id="这一节学什么-1">这一节学什么？</h2>
+<p><strong>上一节</strong>我们用一个 Bash
+工具就能干活了。但只能执行命令，不够优雅。</p>
+<p><strong>这一节</strong>增加到 4
+个工具（Bash、Read、Write、Edit），并学习一个重要设计模式：<strong>分发表（Dispatch
+Map）</strong>。</p>
+<p>循环不变，工具随便加——这就是可扩展的秘密。</p>
+<h2 id="核心概念分发表">核心概念：分发表</h2>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ToolHandler <span class="op">=</span> (input<span class="op">:</span> <span class="bu">Record</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">unknown</span><span class="op">&gt;</span>) <span class="kw">=&gt;</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> TOOL_HANDLERS<span class="op">:</span> <span class="bu">Record</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> ToolHandler<span class="op">&gt;</span> <span class="op">=</span> {</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  Bash<span class="op">:</span> (input) <span class="kw">=&gt;</span> { <span class="co">/* 执行命令 */</span> }<span class="op">,</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  Read<span class="op">:</span> (input) <span class="kw">=&gt;</span> { <span class="co">/* 读取文件 */</span> }<span class="op">,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  Write<span class="op">:</span> (input) <span class="kw">=&gt;</span> { <span class="co">/* 写入文件 */</span> }<span class="op">,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  Edit<span class="op">:</span> (input) <span class="kw">=&gt;</span> { <span class="co">/* 编辑文件 */</span> }<span class="op">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p><strong>白话解释</strong>：分发表就像一本”电话簿”——模型说”我要用 Read
+工具”，我们查电话簿找到 Read 对应的处理函数，然后执行它。</p>
+<p>加新工具？往电话簿里加一条就行，循环一行都不用改。</p>
+<h2 id="四大工具详解">四大工具详解</h2>
+<h3 id="bash-执行命令">Bash — 执行命令</h3>
+<p>和 s01 一样，执行 Shell 命令。这是最灵活的工具。</p>
+<h3 id="read-读取文件">Read — 读取文件</h3>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Read<span class="op">:</span> (input) <span class="kw">=&gt;</span> {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lines <span class="op">=</span> <span class="fu">readFileSync</span>(<span class="fu">resolve</span>(input<span class="op">.</span><span class="at">file_path</span> <span class="im">as</span> <span class="dt">string</span>)<span class="op">,</span> <span class="st">&quot;utf-8&quot;</span>)<span class="op">.</span><span class="fu">split</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)<span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> start <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> ((input<span class="op">.</span><span class="at">offset</span> <span class="im">as</span> <span class="dt">number</span>) <span class="op">??</span> <span class="dv">1</span>) <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> end <span class="op">=</span> input<span class="op">.</span><span class="at">limit</span> <span class="op">?</span> start <span class="op">+</span> (input<span class="op">.</span><span class="at">limit</span> <span class="im">as</span> <span class="dt">number</span>) <span class="op">:</span> lines<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> lines<span class="op">.</span><span class="fu">slice</span>(start<span class="op">,</span> end)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>((l<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span><span class="bu">String</span>(start <span class="op">+</span> i <span class="op">+</span> <span class="dv">1</span>)<span class="op">.</span><span class="fu">padStart</span>(<span class="dv">6</span>)<span class="sc">}</span><span class="vs">|</span><span class="sc">${</span>l<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>) <span class="op">||</span> <span class="st">&quot;(empty)&quot;</span><span class="op">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span></code></pre></div>
+<p>特点： -
+<strong>带行号输出</strong>（<code>1|内容</code>），方便模型定位代码 -
+支持 <code>offset</code> 和 <code>limit</code>
+参数，可以只读文件的一部分</p>
+<h3 id="write-写入文件">Write — 写入文件</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Write<span class="op">:</span> (input) <span class="kw">=&gt;</span> {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">resolve</span>(input<span class="op">.</span><span class="at">file_path</span> <span class="im">as</span> <span class="dt">string</span>)<span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dir <span class="op">=</span> <span class="fu">dirname</span>(p)<span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="fu">existsSync</span>(dir)) <span class="fu">mkdirSync</span>(dir<span class="op">,</span> { recursive<span class="op">:</span> <span class="kw">true</span> })<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeFileSync</span>(p<span class="op">,</span> input<span class="op">.</span><span class="at">content</span> <span class="im">as</span> <span class="dt">string</span><span class="op">,</span> <span class="st">&quot;utf-8&quot;</span>)<span class="op">;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="vs">`File written: </span><span class="sc">${</span>p<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span></code></pre></div>
+<p>特点：<strong>自动创建目录</strong>——如果写
+<code>a/b/c/file.txt</code>，会自动创建 <code>a/b/c/</code>。</p>
+<h3 id="edit-查找替换">Edit — 查找替换</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Edit<span class="op">:</span> (input) <span class="kw">=&gt;</span> {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> content <span class="op">=</span> <span class="fu">readFileSync</span>(p<span class="op">,</span> <span class="st">&quot;utf-8&quot;</span>)<span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> old <span class="op">=</span> input<span class="op">.</span><span class="at">old_string</span> <span class="im">as</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> count <span class="op">=</span> content<span class="op">.</span><span class="fu">split</span>(old)<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (count <span class="op">===</span> <span class="dv">0</span>) <span class="cf">return</span> <span class="vs">`Error: old_string not found`</span><span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (count <span class="op">&gt;</span> <span class="dv">1</span>) <span class="cf">return</span> <span class="vs">`Error: found </span><span class="sc">${</span>count<span class="sc">}</span><span class="vs"> times — must be unique`</span><span class="op">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeFileSync</span>(p<span class="op">,</span> content<span class="op">.</span><span class="fu">replace</span>(old<span class="op">,</span> input<span class="op">.</span><span class="at">new_string</span> <span class="im">as</span> <span class="dt">string</span>))<span class="op">;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="vs">`Edited: </span><span class="sc">${</span>p<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span></code></pre></div>
+<p>关键约束：<strong>old_string
+必须在文件中唯一出现</strong>。这防止了模型修错地方。</p>
+<h2 id="循环如何分发">循环如何分发</h2>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">const</span> b <span class="kw">of</span> response<span class="op">.</span><span class="at">content</span>) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (b<span class="op">.</span><span class="at">type</span> <span class="op">!==</span> <span class="st">&quot;tool_use&quot;</span>) <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> b<span class="op">.</span><span class="at">input</span> <span class="im">as</span> <span class="bu">Record</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">unknown</span><span class="op">&gt;;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 查分发表 → 执行 → 收集结果</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> handler <span class="op">=</span> TOOL_HANDLERS[b<span class="op">.</span><span class="at">name</span>]<span class="op">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> output <span class="op">=</span> handler <span class="op">?</span> <span class="fu">handler</span>(input) <span class="op">:</span> <span class="vs">`Unknown tool: </span><span class="sc">${</span>b<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  results<span class="op">.</span><span class="fu">push</span>({ type<span class="op">:</span> <span class="st">&quot;tool_result&quot;</span><span class="op">,</span> tool_use_id<span class="op">:</span> b<span class="op">.</span><span class="at">id</span><span class="op">,</span> content<span class="op">:</span> output })<span class="op">;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>循环逻辑和 s01 完全一样，唯一的变化是用
+<code>TOOL_HANDLERS[b.name]</code> 查表代替了硬编码。</p>
+<h2 id="源码映射-1">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TOOL_HANDLERS</code></td>
+<td><code>tools.ts:getAllBaseTools()</code></td>
+<td>450 行</td>
+</tr>
+<tr>
+<td>分发表</td>
+<td><code>Map&lt;string, Tool&gt; + buildTool()</code></td>
+<td>350 行</td>
+</tr>
+<tr>
+<td>Bash</td>
+<td><code>BashTool.tsx</code></td>
+<td>650 行</td>
+</tr>
+<tr>
+<td>Read</td>
+<td><code>ReadTool.tsx</code></td>
+<td>230 行</td>
+</tr>
+<tr>
+<td>Write</td>
+<td><code>WriteTool.tsx</code></td>
+<td>180 行</td>
+</tr>
+<tr>
+<td>Edit</td>
+<td><code>EditTool.tsx</code></td>
+<td>460 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>2,320 → ~200 行 (11.6:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-1">动手试试</h2>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s02_tools.ts</span></code></pre></div>
+<p>试试这些输入： - <code>读取 package.json 的前 10 行</code> -
+<code>创建一个 test.ts 文件，写一个 hello world 函数</code> -
+<code>把 test.ts 里的 hello 改成 hi</code></p>
+<h2 id="小测验-1">小测验</h2>
+<ol type="1">
+<li><strong>为什么用分发表而不是 if-else？</strong> 提示：如果有 30
+个工具呢？</li>
+<li><strong>Edit 工具为什么要求唯一匹配？</strong> 提示：如果有 5
+处相同代码，改哪个？</li>
+<li><strong>如何添加一个新的 “ListDir” 工具？</strong>
+需要改几个地方？</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s03-todo.md">s03 先计划再执行</a> — 用 TodoWrite
+给 Agent 加上计划能力</p>
+</blockquote>
+<h1 id="s03-先计划再执行-todowrite-计划工具">s03 先计划再执行 —
+TodoWrite 计划工具</h1>
+<figure>
+<img src="../comics/comic_s03_todo.png" alt="s03 先计划再执行" />
+<figcaption aria-hidden="true">s03 先计划再执行</figcaption>
+</figure>
+<h2 id="这一节学什么-2">这一节学什么？</h2>
+<p><strong>一句话</strong>：给 Agent
+一个”待办清单”工具，让它在动手之前先列计划。</p>
+<p>没有计划的 Agent 就像没有清单的厨师——可能忘记放盐。TodoWrite 让 Agent
+养成”先想后做”的好习惯。</p>
+<h2 id="核心概念-1">核心概念</h2>
+<h3 id="todo-数据结构">Todo 数据结构</h3>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> TodoItem {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>           <span class="co">// 唯一标识，如 &quot;step-1&quot;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  content<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>      <span class="co">// 任务描述</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  status<span class="op">:</span> <span class="st">&quot;pending&quot;</span> <span class="op">|</span> <span class="st">&quot;in_progress&quot;</span> <span class="op">|</span> <span class="st">&quot;completed&quot;</span> <span class="op">|</span> <span class="st">&quot;cancelled&quot;</span><span class="op">;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> todos<span class="op">:</span> TodoItem[] <span class="op">=</span> []<span class="op">;</span></span></code></pre></div>
+<p>四种状态： - <code>pending</code> ○ — 还没开始 -
+<code>in_progress</code> ◉ — 正在做 - <code>completed</code> ✓ — 做完了
+- <code>cancelled</code> ✗ — 不做了</p>
+<h3 id="todowrite-工具处理器">TodoWrite 工具处理器</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>TodoWrite<span class="op">:</span> (input) <span class="kw">=&gt;</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> items <span class="op">=</span> input<span class="op">.</span><span class="at">todos</span> <span class="im">as</span> TodoItem[]<span class="op">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> item <span class="kw">of</span> items) {</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> existing <span class="op">=</span> todos<span class="op">.</span><span class="fu">find</span>((t) <span class="kw">=&gt;</span> t<span class="op">.</span><span class="at">id</span> <span class="op">===</span> item<span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (existing) {</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="co">// 已存在 → 更新</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>      existing<span class="op">.</span><span class="at">content</span> <span class="op">=</span> item<span class="op">.</span><span class="at">content</span><span class="op">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>      existing<span class="op">.</span><span class="at">status</span> <span class="op">=</span> item<span class="op">.</span><span class="at">status</span><span class="op">;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">// 不存在 → 新建</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>      todos<span class="op">.</span><span class="fu">push</span>(item)<span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">renderTodos</span>()<span class="op">;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span></code></pre></div>
+<p><strong>关键设计</strong>：用 <code>id</code>
+匹配——存在就更新，不存在就新建。模型可以一次性创建多个
+todo，也可以逐个更新状态。</p>
+<h3 id="渲染清单">渲染清单</h3>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">renderTodos</span>()<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> icons <span class="op">=</span> { pending<span class="op">:</span> <span class="st">&quot;○&quot;</span><span class="op">,</span> in_progress<span class="op">:</span> <span class="st">&quot;◉&quot;</span><span class="op">,</span> completed<span class="op">:</span> <span class="st">&quot;✓&quot;</span><span class="op">,</span> cancelled<span class="op">:</span> <span class="st">&quot;✗&quot;</span> }<span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> todos<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="vs">`</span><span class="sc">${</span>icons[t<span class="op">.</span><span class="at">status</span>]<span class="sc">}</span><span class="vs"> [</span><span class="sc">${</span>t<span class="op">.</span><span class="at">status</span><span class="sc">}</span><span class="vs">] </span><span class="sc">${</span>t<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>t<span class="op">.</span><span class="at">content</span><span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  )<span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)<span class="op">;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>输出效果：</p>
+<pre><code>○ [pending] step-1: 分析需求
+◉ [in_progress] step-2: 编写代码
+✓ [completed] step-3: 测试验证</code></pre>
+<h2 id="工具如何改变-agent-行为">工具如何改变 Agent 行为</h2>
+<p>关键在 system prompt：</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>system<span class="op">:</span> <span class="st">&quot;Use TodoWrite to plan complex tasks before starting. Read before editing.&quot;</span></span></code></pre></div>
+<p>加了这句话，模型就会在遇到复杂任务时先列计划，再逐步执行。</p>
+<h2 id="源码映射-2">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TodoWrite 工具</td>
+<td><code>tools/TodoWriteTool/</code></td>
+<td>210 行</td>
+</tr>
+<tr>
+<td>todos 状态</td>
+<td><code>AppState.todos</code></td>
+<td>45 行</td>
+</tr>
+<tr>
+<td>渲染</td>
+<td><code>formatTodos()</code></td>
+<td>80 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>335 → ~250 行 (1.3:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-2">动手试试</h2>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s03_todo.ts</span></code></pre></div>
+<p>试试： -
+<code>帮我重构 package.json，加上 build 和 test 脚本</code>（看看它会不会先列计划）
+- 输入 <code>todos</code> 可以随时查看当前计划</p>
+<h2 id="小测验-2">小测验</h2>
+<ol type="1">
+<li><strong>为什么 todos 存在内存而不是文件？</strong>
+提示：这一版够用吗？到了 s07 会怎样？</li>
+<li><strong>如果模型不用 TodoWrite
+直接开干，会出什么问题？</strong></li>
+<li><strong>如何限制最多只能有一个 <code>in_progress</code> 状态的
+todo？</strong></li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s04-subagent.md">s04 子Agent委托</a> —
+把复杂任务委托给独立的子Agent</p>
+</blockquote>
+<h1 id="s04-子agent委托-独立上下文的任务分发">s04 子Agent委托 —
+独立上下文的任务分发</h1>
+<figure>
+<img src="../comics/comic_s04_subagent.png" alt="s04 子Agent委托" />
+<figcaption aria-hidden="true">s04 子Agent委托</figcaption>
+</figure>
+<h2 id="这一节学什么-3">这一节学什么？</h2>
+<p><strong>一句话</strong>：当主 Agent
+需要深入探索某个问题时，派一个”子Agent”去干，子Agent干完汇报结果，主Agent的对话保持干净。</p>
+<p>这就像老板不用亲自去调研——派助手去，助手回来汇报要点就行。</p>
+<h2 id="核心概念上下文隔离">核心概念：上下文隔离</h2>
+<h3 id="问题">问题</h3>
+<p>如果主 Agent 要探索一个大项目的结构，它需要调用很多
+Glob、Read、Grep。这些工具的输出会塞满对话历史（<code>messages[]</code>），后面的对话质量会下降。</p>
+<h3 id="解决">解决</h3>
+<p>子 Agent 用<strong>独立的 <code>messages[]</code></strong>。主 Agent
+只看到子 Agent 的最终总结。</p>
+<pre><code>主 Agent messages[]:
+  [user] &quot;分析这个项目结构&quot;
+  [assistant] tool_use: Task({description: &quot;探索项目&quot;, prompt: &quot;...&quot;})
+  [user] tool_result: &quot;这个项目有 3 个模块：...&quot;  ← 子Agent的总结
+
+子 Agent messages[] (独立的，主Agent看不到):
+  [user] &quot;探索项目&quot;
+  [assistant] tool_use: Glob(*.ts)
+  [user] tool_result: &quot;src/a.ts\nsrc/b.ts\n...&quot;
+  [assistant] tool_use: Read(&quot;src/a.ts&quot;)
+  [user] tool_result: &quot;(200行代码)&quot;
+  [assistant] &quot;这个项目有 3 个模块...&quot;</code></pre>
+<h3 id="实现">实现</h3>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">runSubAgent</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  description<span class="op">:</span> <span class="dt">string</span><span class="op">,</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">:</span> <span class="dt">string</span><span class="op">,</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  depth<span class="op">:</span> <span class="dt">number</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">:</span> <span class="bu">Promise</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> {</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (depth <span class="op">&gt;</span> <span class="dv">3</span>) <span class="cf">return</span> <span class="st">&quot;Error: max nesting depth reached&quot;</span><span class="op">;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 独立的消息历史！</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> msgs<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">MessageParam</span>[] <span class="op">=</span> [</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    { role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span> content<span class="op">:</span> prompt }</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> result <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> turn <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> turn <span class="op">&lt;</span> <span class="dv">15</span><span class="op">;</span> turn<span class="op">++</span>) {</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> resp <span class="op">=</span> <span class="cf">await</span> client<span class="op">.</span><span class="at">messages</span><span class="op">.</span><span class="fu">create</span>({</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>      model<span class="op">:</span> MODEL<span class="op">,</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>      max_tokens<span class="op">:</span> <span class="dv">8192</span><span class="op">,</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>      system<span class="op">:</span> <span class="st">&quot;You are a focused sub-agent. Complete the task and return a concise summary.&quot;</span><span class="op">,</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>      tools<span class="op">:</span> subTools<span class="op">,</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>      messages<span class="op">:</span> msgs<span class="op">,</span>  <span class="co">// ← 注意：是 msgs，不是主Agent的 messages</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... 执行工具 ...</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> result<span class="op">;</span>  <span class="co">// 只返回最终文字给主Agent</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="防无限递归">防无限递归</h3>
+<p>子 Agent 也可以调用 Task 工具（生成子子 Agent），通过
+<code>depth</code> 参数限制最多 3 层嵌套。</p>
+<h2 id="新增工具glob-和-grep">新增工具：Glob 和 Grep</h2>
+<p>本节还新增了两个搜索工具：</p>
+<ul>
+<li><strong>Glob</strong>：按文件名模式查找文件（如
+<code>*.ts</code>）</li>
+<li><strong>Grep</strong>：按内容搜索文件（用 <code>rg</code> /
+ripgrep）</li>
+</ul>
+<p>这让 Agent（特别是子 Agent）能够高效地探索代码库。</p>
+<h2 id="源码映射-3">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task 工具</td>
+<td><code>AgentTool.tsx</code></td>
+<td>1,397 行</td>
+</tr>
+<tr>
+<td>独立 msgs[]</td>
+<td><code>QueryEngine per invocation</code></td>
+<td>200 行</td>
+</tr>
+<tr>
+<td>depth 限制</td>
+<td><code>MAX_DEPTH = 3</code></td>
+<td>15 行</td>
+</tr>
+<tr>
+<td>Glob</td>
+<td><code>GlobTool/</code></td>
+<td>280 行</td>
+</tr>
+<tr>
+<td>Grep</td>
+<td><code>GrepTool/</code></td>
+<td>220 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>2,112 → ~300 行 (7:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-3">动手试试</h2>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s04_subagent.ts</span></code></pre></div>
+<p>试试： - <code>分析 src/ 目录下所有文件的功能</code> -
+<code>对比 s01 和 s02 的代码差异</code></p>
+<p>观察终端输出，会看到 <code>⤷ Sub-agent:</code> 和
+<code>⤶ Sub-agent done</code> 标记。</p>
+<h2 id="小测验-3">小测验</h2>
+<ol type="1">
+<li><strong>子Agent为什么要用独立的 <code>messages[]</code>？</strong>
+不用独立的会怎样？</li>
+<li><strong>为什么限制最大深度为 3？</strong> 如果不限制呢？</li>
+<li><strong>子Agent的工具集和主Agent一样吗？</strong> 为什么？</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s05-skills.md">s05 技能注入</a> —
+按需加载专业知识</p>
+</blockquote>
+<h1 id="s05-技能注入-按需加载专业知识">s05 技能注入 —
+按需加载专业知识</h1>
+<figure>
+<img src="../comics/comic_s05_skills.png" alt="s05 技能注入" />
+<figcaption aria-hidden="true">s05 技能注入</figcaption>
+</figure>
+<h2 id="这一节学什么-4">这一节学什么？</h2>
+<p><strong>一句话</strong>：不是把所有知识塞进系统提示词，而是按需从文件加载——需要什么技能，加载什么技能。</p>
+<p>就像哆啦A梦的百宝袋——不是把所有道具提前拿出来，而是需要的时候才掏出来。</p>
+<h2 id="核心概念-2">核心概念</h2>
+<h3 id="技能skills">技能（Skills）</h3>
+<p>技能就是 <code>SKILL.md</code> 文件，放在特定目录下：</p>
+<pre><code>项目根目录/
+├── .cursor/skills/
+│   └── react/SKILL.md        ← React 开发技能
+├── .minicc/skills/
+│   └── testing/SKILL.md      ← 测试技能
+└── skills/
+    └── deploy/SKILL.md        ← 部署技能</code></pre>
+<p>每个 <code>SKILL.md</code>
+包含该领域的最佳实践、注意事项、代码模板等。</p>
+<h3 id="规则rules">规则（Rules）</h3>
+<p>规则是项目级的约定，从这些文件加载： - <code>AGENTS.md</code> — Agent
+行为规则 - <code>CLAUDE.md</code> — Claude 专用配置 -
+<code>.cursor/rules/*.md</code> — Cursor 规则 -
+<code>.minicc/rules/*.md</code> — minicc 规则</p>
+<h3 id="加载逻辑">加载逻辑</h3>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">loadSkills</span>()<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dirs <span class="op">=</span> [</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">join</span>(<span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>()<span class="op">,</span> <span class="st">&quot;.cursor&quot;</span><span class="op">,</span> <span class="st">&quot;skills&quot;</span>)<span class="op">,</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">join</span>(<span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>()<span class="op">,</span> <span class="st">&quot;.minicc&quot;</span><span class="op">,</span> <span class="st">&quot;skills&quot;</span>)<span class="op">,</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">join</span>(<span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>()<span class="op">,</span> <span class="st">&quot;skills&quot;</span>)<span class="op">,</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> skills<span class="op">:</span> <span class="dt">string</span>[] <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> dir <span class="kw">of</span> dirs) {</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">existsSync</span>(dir)) <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> entry <span class="kw">of</span> <span class="fu">readdirSync</span>(dir<span class="op">,</span> { recursive<span class="op">:</span> <span class="kw">true</span> })) {</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (entry<span class="op">.</span><span class="fu">endsWith</span>(<span class="st">&quot;SKILL.md&quot;</span>)) {</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        skills<span class="op">.</span><span class="fu">push</span>(<span class="vs">`## Skill: </span><span class="sc">${</span>entry<span class="sc">}\n${</span><span class="fu">readFileSync</span>(<span class="fu">join</span>(dir<span class="op">,</span> entry)<span class="op">,</span> <span class="st">&quot;utf-8&quot;</span>)<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">2000</span>)<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> skills<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="vs">`</span><span class="sc">\n\n</span><span class="vs"># Available Skills</span><span class="sc">\n${</span>skills<span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)<span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="构建系统提示词">构建系统提示词</h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buildSystemPrompt</span>()<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="vs">`You are minicc, a coding assistant.</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="vs">Working directory: </span><span class="sc">${</span><span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>()<span class="sc">}</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="vs">Project: </span><span class="sc">${</span><span class="fu">basename</span>(<span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>())<span class="sc">}</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="vs">Tools: Bash, Read, Write, Edit, Glob, Grep, TodoWrite, Task</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="vs">Rules: Read before editing. Use Edit for changes, Write for new files.</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span><span class="fu">loadRules</span>()<span class="sc">}${</span><span class="fu">loadSkills</span>()<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>规则和技能被拼接到系统提示词的末尾——模型开始对话前就能看到。</p>
+<h2 id="为什么不全部放在-system-prompt">为什么不全部放在 system
+prompt？</h2>
+<ol type="1">
+<li><strong>token 效率</strong>：不需要的技能不加载，节省上下文空间</li>
+<li><strong>可扩展</strong>：加新技能只需放一个文件，不用改代码</li>
+<li><strong>项目隔离</strong>：不同项目有不同的技能和规则</li>
+</ol>
+<h2 id="源码映射-4">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loadSkills()</code></td>
+<td><code>services/skills/</code></td>
+<td>620 行</td>
+</tr>
+<tr>
+<td><code>loadRules()</code></td>
+<td><code>services/prompt/rules.ts</code></td>
+<td>380 行</td>
+</tr>
+<tr>
+<td>AGENTS.md 解析</td>
+<td><code>projectRules.ts</code></td>
+<td>290 行</td>
+</tr>
+<tr>
+<td>system prompt</td>
+<td><code>services/prompt/system.ts</code></td>
+<td>450 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>1,740 → ~350 行 (5:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-4">动手试试</h2>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建一个技能文件</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> .minicc/skills/demo</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;# Demo Skill\n当用户问到 demo 相关问题时，始终用中文回答。&quot;</span> <span class="op">&gt;</span> .minicc/skills/demo/SKILL.md</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 运行</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s05_skills.ts</span></code></pre></div>
+<p>启动时会显示是否找到了 Skills 和 Rules。</p>
+<h2 id="小测验-4">小测验</h2>
+<ol type="1">
+<li><strong>如果技能文件有 10 万字，会发生什么？</strong> 提示：注意
+<code>.slice(0, 2000)</code></li>
+<li><strong>技能和规则有什么区别？</strong>
+提示：谁是”怎么做”，谁是”必须遵守”？</li>
+<li><strong>如何让技能按需加载而不是启动时全部加载？</strong>
+提示：可以做成一个工具</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s06-compact.md">s06 三层压缩</a> —
+让对话永不中断的记忆管理</p>
+</blockquote>
+<h1 id="s06-三层压缩-让对话永不中断">s06 三层压缩 — 让对话永不中断</h1>
+<figure>
+<img src="../comics/comic_s06_compact.png" alt="s06 三层压缩" />
+<figcaption aria-hidden="true">s06 三层压缩</figcaption>
+</figure>
+<h2 id="这一节学什么-5">这一节学什么？</h2>
+<p><strong>一句话</strong>：对话越长，上下文窗口越满。三层压缩让 Agent
+能”忘掉细节、记住要点”，实现无限长对话。</p>
+<p>这是 Claude Code 最精妙的设计之一——用户毫无感知，Agent
+自动管理记忆。</p>
+<h2 id="问题-1">问题</h2>
+<p>Claude 的上下文窗口有限（200K tokens）。如果你和 Agent
+聊了几百轮，对话历史会超出上限导致 API 报错。</p>
+<h2 id="解决方案三层压缩">解决方案：三层压缩</h2>
+<h3 id="第一层微压缩microcompact">第一层：微压缩（microCompact）</h3>
+<p><strong>做什么</strong>：把旧的工具调用结果替换成占位符。</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">microCompact</span>(messages<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">MessageParam</span>[])<span class="op">:</span> <span class="dt">void</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> toolResultCount <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 从后往前数</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> messages<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--</span>) {</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> msg <span class="op">=</span> messages[i]<span class="op">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 只处理 tool_result 类型</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> part <span class="kw">of</span> msg<span class="op">.</span><span class="at">content</span>) {</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (part<span class="op">.</span><span class="at">type</span> <span class="op">===</span> <span class="st">&quot;tool_result&quot;</span>) {</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        toolResultCount<span class="op">++;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 保留最近 3 个结果，其余截断</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (toolResultCount <span class="op">&gt;</span> KEEP_RECENT_RESULTS) {</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> (content<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">100</span>) {</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>            part<span class="op">.</span><span class="at">content</span> <span class="op">=</span> <span class="vs">`[Previous tool result truncated — was </span><span class="sc">${</span>content<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> chars]`</span><span class="op">;</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>效果</strong>：一个 5000 字符的文件读取结果变成
+<code>[Previous tool result truncated — was 5000 chars]</code>。</p>
+<p><strong>触发时机</strong>：每一轮循环都自动运行。</p>
+<h3 id="第二层自动压缩autocompact">第二层：自动压缩（autoCompact）</h3>
+<p><strong>做什么</strong>：当估算 token
+数超过阈值，自动触发完整压缩。</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">estimateTokens</span>(messages<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">MessageParam</span>[])<span class="op">:</span> <span class="dt">number</span> {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">ceil</span>(<span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(messages)<span class="op">.</span><span class="at">length</span> <span class="op">/</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">autoCompact</span>(messages<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">MessageParam</span>[])<span class="op">:</span> <span class="bu">Promise</span><span class="op">&lt;</span>Anthropic<span class="op">.</span><span class="at">MessageParam</span>[]<span class="op">&gt;</span> {</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tokens <span class="op">=</span> <span class="fu">estimateTokens</span>(messages)<span class="op">;</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (tokens <span class="op">&lt;</span> COMPACT_THRESHOLD <span class="op">||</span> messages<span class="op">.</span><span class="at">length</span> <span class="op">&lt;</span> <span class="dv">8</span>) <span class="cf">return</span> messages<span class="op">;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`[Auto-compact: ~</span><span class="sc">${</span>tokens<span class="sc">}</span><span class="vs"> tokens → summarizing]`</span>)<span class="op">;</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">compactConversation</span>(messages)<span class="op">;</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>触发时机</strong>：当 token 估算值超过 80,000。</p>
+<h3
+id="第三层手动压缩compactconversation">第三层：手动压缩（compactConversation）</h3>
+<p><strong>做什么</strong>： 1.
+把旧消息保存到磁盘（<code>.transcripts/</code> 目录） 2.
+用模型生成旧消息的摘要 3. 用摘要替换旧消息，只保留最近 6 条</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">compactConversation</span>(messages<span class="op">:</span> Anthropic<span class="op">.</span><span class="at">MessageParam</span>[]) {</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> keepRecent <span class="op">=</span> messages<span class="op">.</span><span class="fu">slice</span>(<span class="op">-</span><span class="dv">6</span>)<span class="op">;</span>     <span class="co">// 保留最近 6 条</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> toSummarize <span class="op">=</span> messages<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">6</span>)<span class="op">;</span> <span class="co">// 其余生成摘要</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 1. 持久化到磁盘</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> msg <span class="kw">of</span> toSummarize) {</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">appendFileSync</span>(transcriptPath<span class="op">,</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(msg) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)<span class="op">;</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 2. 调用模型生成摘要</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> summaryResp <span class="op">=</span> <span class="cf">await</span> client<span class="op">.</span><span class="at">messages</span><span class="op">.</span><span class="fu">create</span>({</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    system<span class="op">:</span> <span class="st">&quot;Summarize this conversation concisely...&quot;</span><span class="op">,</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">:</span> [{ role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span> content<span class="op">:</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(toSummarize) }]<span class="op">,</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 3. 组装新消息</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    { role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span> content<span class="op">:</span> <span class="vs">`[Conversation compacted]</span><span class="sc">\n</span><span class="vs">## Summary:</span><span class="sc">\n${</span>summaryText<span class="sc">}</span><span class="vs">`</span> }<span class="op">,</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    { role<span class="op">:</span> <span class="st">&quot;assistant&quot;</span><span class="op">,</span> content<span class="op">:</span> <span class="st">&quot;Understood. I have the context...&quot;</span> }<span class="op">,</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>keepRecent<span class="op">,</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>触发时机</strong>：用户输入 <code>compact</code> 或模型调用
+Compact 工具。</p>
+<h2 id="三层协同">三层协同</h2>
+<pre><code>每轮循环:
+  ├── 第一层: microCompact (替换旧结果) ← 总是运行
+  ├── 第二层: autoCompact (检查阈值)    ← 超阈值时运行
+  └── 第三层: compact (完整压缩)        ← 手动触发</code></pre>
+<h2 id="源码映射-5">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>microCompact()</code></td>
+<td><code>microCompact.ts</code></td>
+<td>530 行</td>
+</tr>
+<tr>
+<td><code>autoCompact()</code></td>
+<td><code>autoCompact.ts</code></td>
+<td>351 行</td>
+</tr>
+<tr>
+<td><code>compactConversation()</code></td>
+<td><code>compact.ts</code></td>
+<td>1,705 行</td>
+</tr>
+<tr>
+<td><code>.transcripts/</code></td>
+<td><code>transcriptStorage.ts</code></td>
+<td>200 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>2,786 → ~400 行 (7:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-5">动手试试</h2>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s06_compact.ts</span></code></pre></div>
+<p>多聊几轮后，输入 <code>compact</code> 看看压缩效果。</p>
+<h2 id="小测验-5">小测验</h2>
+<ol type="1">
+<li><strong>为什么保留最近 6 条消息不压缩？</strong>
+提示：压缩了会丢失什么？</li>
+<li><strong><code>estimateTokens</code> 用 <code>JSON长度/4</code>
+精确吗？</strong> 实际场景如何改进？</li>
+<li><strong>如果压缩摘要本身很长怎么办？</strong></li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s07-tasks.md">s07 文件任务图</a> — 用 DAG
+管理复杂任务依赖</p>
+</blockquote>
+<h1 id="s07-文件任务图-dag-依赖管理">s07 文件任务图 — DAG 依赖管理</h1>
+<figure>
+<img src="../comics/comic_s07_tasks.png" alt="s07 文件任务图" />
+<figcaption aria-hidden="true">s07 文件任务图</figcaption>
+</figure>
+<h2 id="这一节学什么-6">这一节学什么？</h2>
+<p><strong>一句话</strong>：s03 的 TodoWrite 存在内存里，重启就没了。s07
+用文件存储任务，还支持任务之间的依赖关系（DAG）。</p>
+<p>“任务 B 依赖任务 A” = “A 没完成，B 就不能开始”。</p>
+<h2 id="核心概念-3">核心概念</h2>
+<h3 id="任务数据结构">任务数据结构</h3>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Task {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  subject<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>        <span class="co">// 短标题</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  description<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>    <span class="co">// 详细描述</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  status<span class="op">:</span> <span class="st">&quot;pending&quot;</span> <span class="op">|</span> <span class="st">&quot;in_progress&quot;</span> <span class="op">|</span> <span class="st">&quot;completed&quot;</span><span class="op">;</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  owner<span class="op">?:</span> <span class="dt">string</span><span class="op">;</span>          <span class="co">// 谁在做</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  blocks<span class="op">:</span> <span class="dt">string</span>[]<span class="op">;</span>        <span class="co">// 我完成后可以解锁哪些任务</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  blockedBy<span class="op">:</span> <span class="dt">string</span>[]<span class="op">;</span>     <span class="co">// 谁没完成我就不能开始</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="文件存储">文件存储</h3>
+<p>每个任务保存为独立 JSON 文件：</p>
+<pre><code>.tasks/
+├── task_1.json   ← {&quot;id&quot;:&quot;1&quot;,&quot;subject&quot;:&quot;设计接口&quot;,...}
+├── task_2.json   ← {&quot;id&quot;:&quot;2&quot;,&quot;subject&quot;:&quot;实现功能&quot;,&quot;blockedBy&quot;:[&quot;1&quot;],...}
+└── task_3.json   ← {&quot;id&quot;:&quot;3&quot;,&quot;subject&quot;:&quot;写测试&quot;,&quot;blockedBy&quot;:[&quot;2&quot;],...}</code></pre>
+<h3 id="dag-依赖管理">DAG 依赖管理</h3>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create</span>(subject<span class="op">,</span> description<span class="op">,</span> blockedBy <span class="op">=</span> []) {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> task <span class="op">=</span> { id<span class="op">,</span> subject<span class="op">,</span> description<span class="op">,</span> status<span class="op">:</span> <span class="st">&quot;pending&quot;</span><span class="op">,</span> blocks<span class="op">:</span> []<span class="op">,</span> blockedBy }<span class="op">;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 关键：更新上游任务的 blocks 数组</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> bid <span class="kw">of</span> blockedBy) {</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> blocker <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">get</span>(bid)<span class="op">;</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (blocker) blocker<span class="op">.</span><span class="at">blocks</span><span class="op">.</span><span class="fu">push</span>(id)<span class="op">;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span><span class="op">.</span><span class="fu">save</span>(task)<span class="op">;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">// 任务完成时，自动解除下游的依赖</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">update</span>(id<span class="op">,</span> { status<span class="op">:</span> <span class="st">&quot;completed&quot;</span> }) {</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (status <span class="op">===</span> <span class="st">&quot;completed&quot;</span>) {</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> other <span class="kw">of</span> <span class="kw">this</span><span class="op">.</span><span class="fu">listAll</span>()) {</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> idx <span class="op">=</span> other<span class="op">.</span><span class="at">blockedBy</span><span class="op">.</span><span class="fu">indexOf</span>(id)<span class="op">;</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (idx <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>) {</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        other<span class="op">.</span><span class="at">blockedBy</span><span class="op">.</span><span class="fu">splice</span>(idx<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span>  <span class="co">// 删除依赖</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">save</span>(other)<span class="op">;</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>效果</strong>：任务 1 完成后，任务 2 的
+<code>blockedBy</code> 自动清空，变成可执行状态。</p>
+<h3 id="可视化">可视化</h3>
+<pre><code>○ #1 [pending] 设计接口
+○ #2 [pending] 实现功能 [blocked by: 1]
+○ #3 [pending] 写测试 [blocked by: 2]</code></pre>
+<p>完成 #1 后：</p>
+<pre><code>✓ #1 [completed] 设计接口
+○ #2 [pending] 实现功能           ← 不再被阻塞！
+○ #3 [pending] 写测试 [blocked by: 2]</code></pre>
+<h2 id="对比-s03-todowrite">对比 s03 TodoWrite</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>s03 TodoWrite</th>
+<th>s07 Tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储</td>
+<td>内存</td>
+<td>文件 (.tasks/)</td>
+</tr>
+<tr>
+<td>持久化</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>依赖关系</td>
+<td>无</td>
+<td>DAG</td>
+</tr>
+<tr>
+<td>自动解锁</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>多人协作</td>
+<td>不支持</td>
+<td>支持 (owner)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="源码映射-6">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TaskManager</code></td>
+<td><code>utils/tasks.ts</code></td>
+<td>862 行</td>
+</tr>
+<tr>
+<td><code>task_create</code></td>
+<td><code>TaskCreateTool/</code></td>
+<td>138 行</td>
+</tr>
+<tr>
+<td><code>task_update</code></td>
+<td><code>TaskUpdateTool/</code></td>
+<td>406 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>1,566 → ~350 行 (4.5:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-6">动手试试</h2>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s07_tasks.ts</span></code></pre></div>
+<p>试试： -
+<code>创建三个任务：设计、实现、测试，后面的依赖前面的</code> - 输入
+<code>tasks</code> 查看任务状态 -
+<code>完成第一个任务</code>，再看看任务状态变化</p>
+<h2 id="小测验-6">小测验</h2>
+<ol type="1">
+<li><strong>如果任务之间的依赖形成环怎么办？</strong> 如 A→B→C→A</li>
+<li><strong>为什么每个任务用独立文件而不是一个大 JSON？</strong></li>
+<li><strong>如何支持并行任务？</strong> 提示：两个任务可以同时
+<code>in_progress</code> 吗？</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s08-background.md">s08 后台并发</a> — 让 Agent
+边等边干别的</p>
+</blockquote>
+<h1 id="s08-后台并发-边等边干别的">s08 后台并发 — 边等边干别的</h1>
+<figure>
+<img src="../comics/comic_s08_background.png" alt="s08 后台并发" />
+<figcaption aria-hidden="true">s08 后台并发</figcaption>
+</figure>
+<h2 id="这一节学什么-7">这一节学什么？</h2>
+<p><strong>一句话</strong>：<code>npm install</code> 要跑 30 秒，Agent
+不用傻等——把它扔到后台，继续干别的。</p>
+<p>之前所有的工具调用都是<strong>同步阻塞</strong>的：执行命令时 Agent
+什么都不能做。后台并发解决了这个问题。</p>
+<h2 id="核心概念-4">核心概念</h2>
+<h3 id="阻塞-vs-非阻塞">阻塞 vs 非阻塞</h3>
+<pre><code>阻塞 (s01-s07):
+  Agent → Bash(&quot;npm install&quot;) → 等30秒 → 拿到结果 → 继续
+
+非阻塞 (s08):
+  Agent → background_run(&quot;npm install&quot;) → 立刻返回 → 继续干别的
+                                              ↓
+                              30秒后通知：&quot;npm install 完成了&quot;</code></pre>
+<h3 id="backgroundmanager">BackgroundManager</h3>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BackgroundManager {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">private</span> tasks <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> BgTask<span class="op">&gt;</span>()<span class="op">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">private</span> notifications<span class="op">:</span> <span class="bu">Notification</span>[] <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">run</span>(command<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> id <span class="op">=</span> <span class="vs">`bg_</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nextId</span><span class="op">++</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 用 spawn 而不是 execSync</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> child <span class="op">=</span> <span class="fu">spawn</span>(<span class="st">&quot;bash&quot;</span><span class="op">,</span> [<span class="st">&quot;-c&quot;</span><span class="op">,</span> command]<span class="op">,</span> { cwd<span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="fu">cwd</span>() })<span class="op">;</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 异步收集输出</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    child<span class="op">.</span><span class="at">stdout</span><span class="op">.</span><span class="fu">on</span>(<span class="st">&quot;data&quot;</span><span class="op">,</span> (data) <span class="kw">=&gt;</span> { stdout <span class="op">+=</span> data<span class="op">.</span><span class="fu">toString</span>()<span class="op">;</span> })<span class="op">;</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    child<span class="op">.</span><span class="at">stderr</span><span class="op">.</span><span class="fu">on</span>(<span class="st">&quot;data&quot;</span><span class="op">,</span> (data) <span class="kw">=&gt;</span> { stderr <span class="op">+=</span> data<span class="op">.</span><span class="fu">toString</span>()<span class="op">;</span> })<span class="op">;</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 完成时推入通知队列</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    child<span class="op">.</span><span class="fu">on</span>(<span class="st">&quot;close&quot;</span><span class="op">,</span> (code) <span class="kw">=&gt;</span> {</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>      task<span class="op">.</span><span class="at">status</span> <span class="op">=</span> code <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">&quot;completed&quot;</span> <span class="op">:</span> <span class="st">&quot;failed&quot;</span><span class="op">;</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>      task<span class="op">.</span><span class="at">result</span> <span class="op">=</span> stdout <span class="op">+</span> stderr<span class="op">;</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">this</span><span class="op">.</span><span class="at">notifications</span><span class="op">.</span><span class="fu">push</span>({ taskId<span class="op">:</span> id<span class="op">,</span> status<span class="op">:</span> task<span class="op">.</span><span class="at">status</span><span class="op">,</span> <span class="op">...</span> })<span class="op">;</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`Started background task </span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>command<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>关键区别： -
+<strong><code>execSync</code></strong>（同步）：调用后程序停住，直到命令完成
+-
+<strong><code>spawn</code></strong>（异步）：调用后立刻返回，命令在后台跑</p>
+<h3 id="通知注入">通知注入</h3>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">agentLoop</span>(messages) {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> turn <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> turn <span class="op">&lt;</span> <span class="dv">50</span><span class="op">;</span> turn<span class="op">++</span>) {</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 每一轮循环开头，检查后台任务完成通知</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> notifications <span class="op">=</span> bgMgr<span class="op">.</span><span class="fu">drainNotifications</span>()<span class="op">;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (notifications) {</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>      messages<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>        role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>        content<span class="op">:</span> <span class="vs">`[System notification]</span><span class="sc">\n${</span>notifications<span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... 正常循环 ...</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>后台任务完成后，结果作为”系统通知”注入到对话中，模型就能看到了。</p>
+<h2 id="使用场景">使用场景</h2>
+<table>
+<thead>
+<tr>
+<th>适合放后台</th>
+<th>不适合放后台</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm install</code></td>
+<td>读文件（太快了）</td>
+</tr>
+<tr>
+<td><code>npm run build</code></td>
+<td>简单的 ls</td>
+</tr>
+<tr>
+<td><code>npm test</code></td>
+<td>需要立刻看结果的</td>
+</tr>
+<tr>
+<td>长时间编译</td>
+<td>交互式命令</td>
+</tr>
+</tbody>
+</table>
+<h2 id="源码映射-7">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BackgroundManager</code></td>
+<td><code>LocalShellTask/</code></td>
+<td>522 行</td>
+</tr>
+<tr>
+<td><code>background_run</code></td>
+<td><code>BashTool:run_in_background</code></td>
+<td>80 行</td>
+</tr>
+<tr>
+<td>通知队列</td>
+<td><code>BackgroundTaskNotifier</code></td>
+<td>120 行</td>
+</tr>
+<tr>
+<td><code>drainNotifications</code></td>
+<td><code>query.ts:injectNotifications()</code></td>
+<td>50 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>772 → ~350 行 (2.2:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-7">动手试试</h2>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s08_background.ts</span></code></pre></div>
+<p>试试： - <code>在后台运行 sleep 5 &amp;&amp; echo done</code> -
+然后立刻输入其他命令 - 输入 <code>bg</code> 查看后台任务状态 - 5
+秒后看通知</p>
+<h2 id="小测验-7">小测验</h2>
+<ol type="1">
+<li><strong>为什么用 <code>spawn</code> 而不是
+<code>exec</code>？</strong> 提示：exec 有什么限制？</li>
+<li><strong>如果后台任务一直不结束怎么办？</strong>
+需要加什么机制？</li>
+<li><strong>通知是”推”还是”拉”？</strong> 提示：drainNotifications
+是主动调用的</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s09-teams.md">s09 Agent团队</a> — 多个 Agent
+协作</p>
+</blockquote>
+<h1 id="s09-agent团队-多agent协作">s09 Agent团队 — 多Agent协作</h1>
+<figure>
+<img src="../comics/comic_s09_teams.png" alt="s09 Agent团队" />
+<figcaption aria-hidden="true">s09 Agent团队</figcaption>
+</figure>
+<h2 id="这一节学什么-8">这一节学什么？</h2>
+<p><strong>一句话</strong>：s04 的子Agent是”用完就扔”的临时工。s09
+的团队成员是<strong>持久存在</strong>的队友，用异步邮箱通信。</p>
+<p>就像一个开发团队——队长分配任务，队员各自工作，通过消息沟通。</p>
+<h2 id="对比-s04-子agent">对比 s04 子Agent</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>s04 子Agent</th>
+<th>s09 团队</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生命周期</td>
+<td>调用时创建，完成后销毁</td>
+<td>持久运行</td>
+</tr>
+<tr>
+<td>通信方式</td>
+<td>返回值</td>
+<td>异步邮箱 (JSONL)</td>
+</tr>
+<tr>
+<td>并发</td>
+<td>串行</td>
+<td>并行</td>
+</tr>
+<tr>
+<td>主Agent阻塞</td>
+<td>是</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<h2 id="核心概念-5">核心概念</h2>
+<h3 id="消息总线messagebus">消息总线（MessageBus）</h3>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MessageBus {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">send</span>(to<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> msg<span class="op">:</span> TeamMessage) {</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 追加写入 JSONL 文件</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">appendFileSync</span>(</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">join</span>(INBOX_DIR<span class="op">,</span> <span class="vs">`</span><span class="sc">${</span>to<span class="sc">}</span><span class="vs">.jsonl`</span>)<span class="op">,</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>      <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(msg) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readInbox</span>(name<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> TeamMessage[] {</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> path <span class="op">=</span> <span class="fu">join</span>(INBOX_DIR<span class="op">,</span> <span class="vs">`</span><span class="sc">${</span>name<span class="sc">}</span><span class="vs">.jsonl`</span>)<span class="op">;</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> lines <span class="op">=</span> <span class="fu">readFileSync</span>(path<span class="op">,</span> <span class="st">&quot;utf-8&quot;</span>)<span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="fu">split</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)<span class="op">;</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFileSync</span>(path<span class="op">,</span> <span class="st">&quot;&quot;</span>)<span class="op">;</span> <span class="co">// 读取后清空</span></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lines<span class="op">.</span><span class="fu">map</span>((l) <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(l))<span class="op">;</span></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>JSONL 格式</strong>：每行一个 JSON
+对象，追加写入不会冲突。</p>
+<p>文件结构：</p>
+<pre><code>.team/
+├── config.json              ← 团队成员配置
+└── inbox/
+    ├── lead.jsonl            ← 队长的收件箱
+    ├── frontend_dev.jsonl    ← 前端队员的收件箱
+    └── tester.jsonl          ← 测试队员的收件箱</code></pre>
+<h3 id="生成团队成员">生成团队成员</h3>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spawn</span>(name<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> role<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> initialTask<span class="op">:</span> <span class="dt">string</span>) {</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 1. 注册成员</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span><span class="op">.</span><span class="at">config</span><span class="op">.</span><span class="at">members</span><span class="op">.</span><span class="fu">push</span>({ name<span class="op">,</span> role<span class="op">,</span> status<span class="op">:</span> <span class="st">&quot;active&quot;</span> })<span class="op">;</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 2. 发送初始任务</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  bus<span class="op">.</span><span class="fu">send</span>(name<span class="op">,</span> {</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    type<span class="op">:</span> <span class="st">&quot;task&quot;</span><span class="op">,</span> from<span class="op">:</span> <span class="st">&quot;lead&quot;</span><span class="op">,</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    content<span class="op">:</span> initialTask<span class="op">,</span> timestamp<span class="op">:</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 3. 启动成员的独立循环（后台运行）</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span><span class="op">.</span><span class="fu">runTeammateLoop</span>(name<span class="op">,</span> role)<span class="op">;</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="成员循环">成员循环</h3>
+<p>每个成员都有自己的 Agent 循环：</p>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="fu">runTeammateLoop</span>(name<span class="op">,</span> role) {</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> msgs <span class="op">=</span> []<span class="op">;</span>       <span class="co">// 独立的对话历史</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> turn <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> turn <span class="op">&lt;</span> <span class="dv">30</span><span class="op">;</span> turn<span class="op">++</span>) {</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> inbox <span class="op">=</span> bus<span class="op">.</span><span class="fu">readInbox</span>(name)<span class="op">;</span>  <span class="co">// 读收件箱</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (inbox<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>      msgs<span class="op">.</span><span class="fu">push</span>({ role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span> content<span class="op">:</span> inboxText })<span class="op">;</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 调用模型，执行工具...</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 完成后发送结果给队长</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    bus<span class="op">.</span><span class="fu">send</span>(<span class="st">&quot;lead&quot;</span><span class="op">,</span> { type<span class="op">:</span> <span class="st">&quot;result&quot;</span><span class="op">,</span> from<span class="op">:</span> name<span class="op">,</span> content<span class="op">:</span> text })<span class="op">;</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="队长轮询">队长轮询</h3>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">agentLoop</span>(messages) {</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> turn <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> turn <span class="op">&lt;</span> <span class="dv">50</span><span class="op">;</span> turn<span class="op">++</span>) {</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 每轮检查队长收件箱</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> inbox <span class="op">=</span> bus<span class="op">.</span><span class="fu">readInbox</span>(<span class="st">&quot;lead&quot;</span>)<span class="op">;</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (inbox<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>      messages<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>        role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>        content<span class="op">:</span> <span class="vs">`[Team messages]</span><span class="sc">\n${</span>inboxText<span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... 正常循环 ...</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="工作流程">工作流程</h2>
+<pre><code>1. 用户 → 队长：&quot;实现一个登录功能&quot;
+2. 队长 → team_spawn(&quot;前端开发&quot;, &quot;做登录页面&quot;)
+         → team_spawn(&quot;测试&quot;, &quot;写测试用例&quot;)
+3. 前端开发 ← 收到任务，开始工作
+   测试     ← 收到任务，开始工作
+4. 前端开发 → 队长：&quot;登录页面做好了&quot;
+   测试     → 队长：&quot;测试用例写好了&quot;
+5. 队长 → 用户：&quot;全部完成！&quot;</code></pre>
+<h2 id="源码映射-8">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TeammateManager</code></td>
+<td><code>swarm/inProcessRunner.ts</code></td>
+<td>1,552 行</td>
+</tr>
+<tr>
+<td><code>MessageBus</code></td>
+<td><code>swarm/messages.ts + JSONL</code></td>
+<td>280 行</td>
+</tr>
+<tr>
+<td><code>team_spawn</code></td>
+<td><code>TeamCreateTool/</code></td>
+<td>240 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>2,372 → ~450 行 (5.3:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-8">动手试试</h2>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s09_teams.ts</span></code></pre></div>
+<p>试试： - <code>创建两个队友分别负责前端和后端，给他们分配任务</code>
+- 输入 <code>team</code> 查看团队成员状态</p>
+<h2 id="小测验-8">小测验</h2>
+<ol type="1">
+<li><strong>JSONL 文件为什么”读后清空”？</strong> 不清空会怎样？</li>
+<li><strong>如果两个队员同时写同一个文件会怎样？</strong>
+需要什么机制？</li>
+<li><strong>队员能和队员直接通信吗？</strong>
+还是必须通过队长转发？</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s10-protocols.md">s10 团队协议</a> —
+请求-响应的协商机制</p>
+</blockquote>
+<h1 id="s10-团队协议-请求-响应协商">s10 团队协议 — 请求-响应协商</h1>
+<figure>
+<img src="../comics/comic_s10_protocols.png" alt="s10 团队协议" />
+<figcaption aria-hidden="true">s10 团队协议</figcaption>
+</figure>
+<h2 id="这一节学什么-9">这一节学什么？</h2>
+<p><strong>一句话</strong>：团队成员做大改动前，要先请示队长批准。通过
+<code>request_id</code> 匹配请求和响应。</p>
+<p>没有协议的团队就像没有审批流程的公司——谁都能随便改线上代码。</p>
+<h2 id="核心概念-6">核心概念</h2>
+<h3 id="协议跟踪器">协议跟踪器</h3>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> ProtocolRequest {</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>                              <span class="co">// 唯一请求ID</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  type<span class="op">:</span> <span class="st">&quot;shutdown&quot;</span> <span class="op">|</span> <span class="st">&quot;plan_approval&quot;</span><span class="op">;</span>      <span class="co">// 协议类型</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  from<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>                             <span class="co">// 发起人</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  plan<span class="op">?:</span> <span class="dt">string</span><span class="op">;</span>                            <span class="co">// 计划详情</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  status<span class="op">:</span> <span class="st">&quot;pending&quot;</span> <span class="op">|</span> <span class="st">&quot;approved&quot;</span> <span class="op">|</span> <span class="st">&quot;rejected&quot;</span><span class="op">;</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  feedback<span class="op">?:</span> <span class="dt">string</span><span class="op">;</span>                        <span class="co">// 审批反馈</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> protocolTracker <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> ProtocolRequest<span class="op">&gt;</span>()<span class="op">;</span></span></code></pre></div>
+<h3 id="两种协议">两种协议</h3>
+<p><strong>1. 计划审批（plan_approval）</strong></p>
+<pre><code>队员 → 队长：&quot;我想重构整个数据库层&quot;（request_id: abc123）
+队长 → 审查 → 队员：&quot;批准&quot;或&quot;拒绝：风险太大&quot;（同一个 request_id）</code></pre>
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 队员发起</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (b<span class="op">.</span><span class="at">name</span> <span class="op">===</span> <span class="st">&quot;plan_approval&quot;</span>) {</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> reqId <span class="op">=</span> <span class="fu">randomUUID</span>()<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">8</span>)<span class="op">;</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  protocolTracker<span class="op">.</span><span class="fu">set</span>(reqId<span class="op">,</span> {</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    id<span class="op">:</span> reqId<span class="op">,</span> type<span class="op">:</span> <span class="st">&quot;plan_approval&quot;</span><span class="op">,</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    from<span class="op">:</span> name<span class="op">,</span> plan<span class="op">:</span> input<span class="op">.</span><span class="at">plan</span><span class="op">,</span> status<span class="op">:</span> <span class="st">&quot;pending&quot;</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  bus<span class="op">.</span><span class="fu">send</span>(<span class="st">&quot;lead&quot;</span><span class="op">,</span> {</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    type<span class="op">:</span> <span class="st">&quot;plan_approval&quot;</span><span class="op">,</span> from<span class="op">:</span> name<span class="op">,</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    content<span class="op">:</span> input<span class="op">.</span><span class="at">plan</span><span class="op">,</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>    extra<span class="op">:</span> { request_id<span class="op">:</span> reqId }</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="co">// 队长审批</span></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (b<span class="op">.</span><span class="at">name</span> <span class="op">===</span> <span class="st">&quot;approve_plan&quot;</span>) {</span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> req <span class="op">=</span> protocolTracker<span class="op">.</span><span class="fu">get</span>(input<span class="op">.</span><span class="at">request_id</span>)<span class="op">;</span></span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>  req<span class="op">.</span><span class="at">status</span> <span class="op">=</span> input<span class="op">.</span><span class="at">approve</span> <span class="op">?</span> <span class="st">&quot;approved&quot;</span> <span class="op">:</span> <span class="st">&quot;rejected&quot;</span><span class="op">;</span></span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>  bus<span class="op">.</span><span class="fu">send</span>(req<span class="op">.</span><span class="at">from</span><span class="op">,</span> {</span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>    type<span class="op">:</span> <span class="st">&quot;plan_approval_response&quot;</span><span class="op">,</span></span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a>    content<span class="op">:</span> input<span class="op">.</span><span class="at">approve</span> <span class="op">?</span> <span class="st">&quot;Approved&quot;</span> <span class="op">:</span> <span class="vs">`Rejected: </span><span class="sc">${</span>input<span class="op">.</span><span class="at">feedback</span><span class="sc">}</span><span class="vs">`</span><span class="op">,</span></span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>    extra<span class="op">:</span> { request_id<span class="op">:</span> req<span class="op">.</span><span class="at">id</span><span class="op">,</span> approve<span class="op">:</span> input<span class="op">.</span><span class="at">approve</span> }</span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>2. 优雅关闭（shutdown_request）</strong></p>
+<pre><code>队长 → 队员：&quot;请安全退出&quot;（request_id: xyz789）
+队员 → 保存工作 → 队长：&quot;收到，已安全退出&quot;</code></pre>
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 队员收到关闭请求</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (msg<span class="op">.</span><span class="at">type</span> <span class="op">===</span> <span class="st">&quot;shutdown_request&quot;</span>) {</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  bus<span class="op">.</span><span class="fu">send</span>(<span class="st">&quot;lead&quot;</span><span class="op">,</span> {</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    type<span class="op">:</span> <span class="st">&quot;shutdown_response&quot;</span><span class="op">,</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    content<span class="op">:</span> <span class="st">&quot;Approved&quot;</span><span class="op">,</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    extra<span class="op">:</span> { request_id<span class="op">:</span> reqId<span class="op">,</span> approve<span class="op">:</span> <span class="kw">true</span> }</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  shouldExit <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="为什么需要-request_id">为什么需要 request_id？</h3>
+<p>因为通信是<strong>异步</strong>的。可能同时有多个审批请求在进行中，需要用
+ID 来匹配”哪个响应对应哪个请求”。</p>
+<pre><code>时间线：
+  t1: 队员A 发送审批请求 (id: aaa)
+  t2: 队员B 发送审批请求 (id: bbb)
+  t3: 队长批准 id:bbb
+  t4: 队长拒绝 id:aaa</code></pre>
+<h2 id="源码映射-9">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProtocolTracker</code></td>
+<td><code>coordinatorMode.ts</code></td>
+<td>369 行</td>
+</tr>
+<tr>
+<td>shutdown</td>
+<td><code>shutdownProtocol.ts</code></td>
+<td>200 行</td>
+</tr>
+<tr>
+<td>plan_approval</td>
+<td><code>permissionBridge.ts + leaderBridge.ts</code></td>
+<td>350 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>1,039 → ~450 行 (2.3:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-9">动手试试</h2>
+<div class="sourceCode" id="cb60"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s10_protocols.ts</span></code></pre></div>
+<p>试试： - <code>创建一个队员，让他做一个需要审批的重大改动</code> -
+观察审批流程 - 输入 <code>team</code> 查看状态</p>
+<h2 id="小测验-9">小测验</h2>
+<ol type="1">
+<li><strong>如果队长不回复审批请求，队员会怎样？</strong>
+需要加什么机制？</li>
+<li><strong>能不能让队员之间也互相审批？</strong> 怎么改？</li>
+<li><strong>为什么用 <code>randomUUID</code> 而不是自增数字？</strong>
+提示：多个队员并发时</li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s11-autonomous.md">s11 自主Agent</a> —
+不用指派，自己找活干</p>
+</blockquote>
+<h1 id="s11-自主agent-不用指派自己找活干">s11 自主Agent —
+不用指派，自己找活干</h1>
+<figure>
+<img src="../comics/comic_s11_autonomous.png" alt="s11 自主Agent" />
+<figcaption aria-hidden="true">s11 自主Agent</figcaption>
+</figure>
+<h2 id="这一节学什么-10">这一节学什么？</h2>
+<p><strong>一句话</strong>：s09-s10 的队员需要队长分配任务。s11
+的队员能<strong>自己扫描任务板、认领任务、完成后继续找新任务</strong>。</p>
+<p>这就像一个高效团队——不用老板盯着，每个人自驱动。</p>
+<h2 id="核心概念状态机">核心概念：状态机</h2>
+<p>每个自主 Agent 按以下状态循环：</p>
+<pre><code>┌─→ 工作 (WORK)
+│     ↓ （工作完成，调用 idle）
+│   空闲 (IDLE)
+│     ↓ （开始扫描任务板）
+│   扫描 (SCAN)
+│     ↓ （发现未认领任务）
+│   认领 (CLAIM)
+│     ↓ （认领成功）
+└───┘</code></pre>
+<h3 id="工作阶段work">工作阶段（WORK）</h3>
+<p>和普通 Agent 一样，执行工具完成任务。完成后调用 <code>idle</code>
+工具进入空闲状态。</p>
+<h3 id="扫描阶段scan">扫描阶段（SCAN）</h3>
+<div class="sourceCode" id="cb62"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scanUnclaimed</span>()<span class="op">:</span> Task[] {</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="fu">listAll</span>()<span class="op">.</span><span class="fu">filter</span>((t) <span class="kw">=&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    t<span class="op">.</span><span class="at">status</span> <span class="op">===</span> <span class="st">&quot;pending&quot;</span> <span class="op">&amp;&amp;</span>    <span class="co">// 还没开始</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>t<span class="op">.</span><span class="at">owner</span> <span class="op">&amp;&amp;</span>                   <span class="co">// 没人认领</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    t<span class="op">.</span><span class="at">blockedBy</span><span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span>      <span class="co">// 没有未完成的依赖</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="认领阶段claim-文件锁">认领阶段（CLAIM）— 文件锁</h3>
+<div class="sourceCode" id="cb63"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">claim</span>(id<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> owner<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> <span class="dt">boolean</span> {</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lockFile <span class="op">=</span> <span class="fu">join</span>(TASKS_DIR<span class="op">,</span> <span class="vs">`_claim_lock`</span>)<span class="op">;</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">existsSync</span>(lockFile)) <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span>   <span class="co">// 有人在认领，退让</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeFileSync</span>(lockFile<span class="op">,</span> owner)<span class="op">;</span>          <span class="co">// 抢锁</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> t <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">get</span>(id)<span class="op">;</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span>t <span class="op">||</span> t<span class="op">.</span><span class="at">owner</span> <span class="op">||</span> t<span class="op">.</span><span class="at">status</span> <span class="op">!==</span> <span class="st">&quot;pending&quot;</span>) {</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unlinkSync</span>(lockFile)<span class="op">;</span>                   <span class="co">// 任务已被别人拿走</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>    t<span class="op">.</span><span class="at">owner</span> <span class="op">=</span> owner<span class="op">;</span></span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>    t<span class="op">.</span><span class="at">status</span> <span class="op">=</span> <span class="st">&quot;in_progress&quot;</span><span class="op">;</span></span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="fu">save</span>(t)<span class="op">;</span></span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlinkSync</span>(lockFile)<span class="op">;</span>                     <span class="co">// 释放锁</span></span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> {</span>
+<span id="cb63-18"><a href="#cb63-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlinkSync</span>(lockFile)<span class="op">;</span></span>
+<span id="cb63-19"><a href="#cb63-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb63-20"><a href="#cb63-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb63-21"><a href="#cb63-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>为什么需要文件锁？</strong> 多个 Agent
+可能同时看到同一个任务并尝试认领。文件锁确保只有一个能成功。</p>
+<h3 id="空闲超时">空闲超时</h3>
+<div class="sourceCode" id="cb64"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> idleTime <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (idleTime <span class="op">&lt;</span> IDLE_TIMEOUT) {       <span class="co">// 15秒超时</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> unclaimed <span class="op">=</span> taskMgr<span class="op">.</span><span class="fu">scanUnclaimed</span>()<span class="op">;</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (unclaimed<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (taskMgr<span class="op">.</span><span class="fu">claim</span>(task<span class="op">.</span><span class="at">id</span><span class="op">,</span> name)) {</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>      <span class="co">// 认领成功 → 回到工作</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">continue</span> outerLoop<span class="op">;</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="kw">new</span> <span class="bu">Promise</span>(r <span class="kw">=&gt;</span> <span class="pp">setTimeout</span>(r<span class="op">,</span> POLL_INTERVAL))<span class="op">;</span>  <span class="co">// 等3秒再扫描</span></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>  idleTime <span class="op">+=</span> POLL_INTERVAL<span class="op">;</span></span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a><span class="co">// 超时 → 自动退出</span></span></code></pre></div>
+<h3 id="身份保持">身份保持</h3>
+<p>Agent 上下文被压缩后，可能”忘记自己是谁”。解决方案：</p>
+<div class="sourceCode" id="cb65"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (msgs<span class="op">.</span><span class="at">length</span> <span class="op">&lt;=</span> <span class="dv">3</span>) {</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  msgs<span class="op">.</span><span class="fu">unshift</span>({</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    role<span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    content<span class="op">:</span> <span class="vs">`You are &quot;</span><span class="sc">${</span>name<span class="sc">}</span><span class="vs">&quot;, an autonomous teammate with role: </span><span class="sc">${</span>role<span class="sc">}</span><span class="vs">.`</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="完整流程示例">完整流程示例</h2>
+<pre><code>1. 队长创建 5 个任务
+2. 队长 spawn 2 个自主 Agent
+3. Agent-A 扫描 → 认领任务 #1 → 工作 → 完成 → idle
+4. Agent-B 扫描 → 认领任务 #2 → 工作 → 完成 → idle
+5. Agent-A 扫描 → 认领任务 #3 → 工作 → 完成 → idle
+6. Agent-B 扫描 → 认领任务 #4 → ...
+7. 所有任务完成 → 扫描无结果 → 超时 → 自动退出</code></pre>
+<h2 id="源码映射-10">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>状态机</td>
+<td><code>autonomousMode.ts</code></td>
+<td>480 行</td>
+</tr>
+<tr>
+<td><code>scanUnclaimed()</code></td>
+<td><code>getUnclaimedTasks()</code></td>
+<td>60 行</td>
+</tr>
+<tr>
+<td><code>claim()</code></td>
+<td><code>claimWithLock()</code></td>
+<td>120 行</td>
+</tr>
+<tr>
+<td>身份保持</td>
+<td><code>injectIdentity()</code></td>
+<td>45 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>795 → ~500 行 (1.6:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-10">动手试试</h2>
+<div class="sourceCode" id="cb67"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s11_autonomous.ts</span></code></pre></div>
+<p>试试： - <code>创建5个简单任务，然后生成2个自主Agent来完成它们</code>
+- 输入 <code>tasks</code> 查看任务认领和完成情况</p>
+<h2 id="小测验-10">小测验</h2>
+<ol type="1">
+<li><strong>如果两个 Agent 同时扫描到同一个任务？</strong>
+文件锁够安全吗？</li>
+<li><strong>IDLE_TIMEOUT 设多长合适？</strong>
+太短和太长分别有什么问题？</li>
+<li><strong>自主 Agent 和 s04 子Agent 的本质区别是什么？</strong></li>
+</ol>
+<hr />
+<blockquote>
+<p>下一节：<a href="./s12-worktree.md">s12 Git隔离</a> — 用 Git Worktree
+隔离工作空间</p>
+</blockquote>
+<h1 id="s12-git隔离-worktree-并行工作空间">s12 Git隔离 — Worktree
+并行工作空间</h1>
+<figure>
+<img src="../comics/comic_s12_worktree.png" alt="s12 Git隔离" />
+<figcaption aria-hidden="true">s12 Git隔离</figcaption>
+</figure>
+<h2 id="这一节学什么-11">这一节学什么？</h2>
+<p><strong>一句话</strong>：多个 Agent 同时改代码会冲突。Git Worktree
+给每个 Agent 一个独立目录，互不干扰。</p>
+<p>这是 Claude Code 多Agent系统的最后一块拼图——工作空间隔离。</p>
+<h2 id="问题-2">问题</h2>
+<p>s09-s11 的多个 Agent 都在<strong>同一个目录</strong>下工作。如果
+Agent-A 在改 <code>app.ts</code>，Agent-B 也在改
+<code>app.ts</code>，就会互相覆盖。</p>
+<h2 id="解决方案git-worktree">解决方案：Git Worktree</h2>
+<p>Git Worktree 是 Git
+的内置功能——可以从同一个仓库创建多个工作目录，每个目录有自己的分支。</p>
+<pre><code>项目仓库/
+├── (主工作目录)              ← 队长在这里
+├── .worktrees/
+│   ├── feature-login/       ← Agent-A 的隔离空间
+│   └── fix-bug-123/         ← Agent-B 的隔离空间
+└── .tasks/
+    ├── task_1.json           ← 绑定到 feature-login
+    └── task_2.json           ← 绑定到 fix-bug-123</code></pre>
+<h2 id="核心概念-7">核心概念</h2>
+<h3 id="worktreemanager">WorktreeManager</h3>
+<div class="sourceCode" id="cb69"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> WorktreeManager {</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">create</span>(name<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> taskId<span class="op">?:</span> <span class="dt">string</span>)<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> branch <span class="op">=</span> <span class="vs">`wt/</span><span class="sc">${</span>name<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> wtPath <span class="op">=</span> <span class="fu">join</span>(<span class="kw">this</span><span class="op">.</span><span class="at">repoRoot</span><span class="op">,</span> <span class="st">&quot;.worktrees&quot;</span><span class="op">,</span> name)<span class="op">;</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 从当前 HEAD 创建新分支 + 新工作目录</span></span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> baseRef <span class="op">=</span> <span class="fu">execSync</span>(<span class="st">&quot;git rev-parse HEAD&quot;</span>)<span class="op">.</span><span class="fu">trim</span>()<span class="op">;</span></span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">execSync</span>(<span class="vs">`git worktree add -b &quot;</span><span class="sc">${</span>branch<span class="sc">}</span><span class="vs">&quot; &quot;</span><span class="sc">${</span>wtPath<span class="sc">}</span><span class="vs">&quot; &quot;</span><span class="sc">${</span>baseRef<span class="sc">}</span><span class="vs">&quot;`</span>)<span class="op">;</span></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 绑定到任务</span></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (taskId) {</span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>      taskMgr<span class="op">.</span><span class="fu">update</span>(taskId<span class="op">,</span> { worktree<span class="op">:</span> name<span class="op">,</span> status<span class="op">:</span> <span class="st">&quot;in_progress&quot;</span> })<span class="op">;</span></span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`Created worktree &quot;</span><span class="sc">${</span>name<span class="sc">}</span><span class="vs">&quot; at </span><span class="sc">${</span>wtPath<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb69-17"><a href="#cb69-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-18"><a href="#cb69-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">run</span>(name<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> command<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb69-19"><a href="#cb69-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> wt <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">findWorktree</span>(name)<span class="op">;</span></span>
+<span id="cb69-20"><a href="#cb69-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 在 worktree 目录下执行命令</span></span>
+<span id="cb69-21"><a href="#cb69-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">execSync</span>(command<span class="op">,</span> { cwd<span class="op">:</span> wt<span class="op">.</span><span class="at">path</span> })<span class="op">;</span></span>
+<span id="cb69-22"><a href="#cb69-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb69-23"><a href="#cb69-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-24"><a href="#cb69-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove</span>(name<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> completeTask<span class="op">?:</span> <span class="dt">boolean</span>)<span class="op">:</span> <span class="dt">string</span> {</span>
+<span id="cb69-25"><a href="#cb69-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">execSync</span>(<span class="vs">`git worktree remove &quot;</span><span class="sc">${</span>wt<span class="op">.</span><span class="at">path</span><span class="sc">}</span><span class="vs">&quot; --force`</span>)<span class="op">;</span></span>
+<span id="cb69-26"><a href="#cb69-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">execSync</span>(<span class="vs">`git branch -D &quot;</span><span class="sc">${</span>wt<span class="op">.</span><span class="at">branch</span><span class="sc">}</span><span class="vs">&quot;`</span>)<span class="op">;</span></span>
+<span id="cb69-27"><a href="#cb69-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (completeTask <span class="op">&amp;&amp;</span> wt<span class="op">.</span><span class="at">taskId</span>) {</span>
+<span id="cb69-28"><a href="#cb69-28" aria-hidden="true" tabindex="-1"></a>      taskMgr<span class="op">.</span><span class="fu">update</span>(wt<span class="op">.</span><span class="at">taskId</span><span class="op">,</span> { status<span class="op">:</span> <span class="st">&quot;completed&quot;</span> })<span class="op">;</span></span>
+<span id="cb69-29"><a href="#cb69-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb69-30"><a href="#cb69-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb69-31"><a href="#cb69-31" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="任务绑定">任务绑定</h3>
+<p>每个任务可以绑定到一个 worktree：</p>
+<div class="sourceCode" id="cb70"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Task {</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ... 原有字段 ...</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  worktree<span class="op">?:</span> <span class="dt">string</span><span class="op">;</span>  <span class="co">// 绑定的 worktree 名称</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>创建 worktree 时自动绑定，删除 worktree 时可以自动完成任务。</p>
+<h3 id="事件日志">事件日志</h3>
+<div class="sourceCode" id="cb71"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">emitEvent</span>(event<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> data<span class="op">:</span> <span class="bu">Record</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">unknown</span><span class="op">&gt;</span>) {</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">appendFileSync</span>(</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">join</span>(WORKTREE_DIR<span class="op">,</span> <span class="st">&quot;events.jsonl&quot;</span>)<span class="op">,</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>({ <span class="bu">event</span><span class="op">,</span> timestamp<span class="op">:</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">,</span> <span class="op">...</span>data }) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>所有 worktree 操作都记录日志，便于追踪和调试。</p>
+<h2 id="完整工作流">完整工作流</h2>
+<pre><code>1. 队长创建任务 #1: &quot;实现登录&quot;
+2. 队长创建 worktree:
+   worktree_create(&quot;feature-login&quot;, task_id: &quot;1&quot;)
+   → 创建 .worktrees/feature-login/ 目录
+   → 创建 wt/feature-login 分支
+   → 任务 #1 状态变为 in_progress
+
+3. 在 worktree 中工作:
+   worktree_run(&quot;feature-login&quot;, &quot;echo &#39;console.log(1)&#39; &gt; login.ts&quot;)
+
+4. 工作完成，删除 worktree:
+   worktree_remove(&quot;feature-login&quot;, complete_task: true)
+   → 删除目录和分支
+   → 任务 #1 状态变为 completed</code></pre>
+<h2 id="对比总结12个阶段的演进">对比总结：12个阶段的演进</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>能力</th>
+<th>代码量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s01</td>
+<td>循环 + 1个工具</td>
+<td>~100 行</td>
+</tr>
+<tr>
+<td>s02</td>
+<td>4个工具 + 分发表</td>
+<td>~200 行</td>
+</tr>
+<tr>
+<td>s03</td>
+<td>计划能力</td>
+<td>~250 行</td>
+</tr>
+<tr>
+<td>s04</td>
+<td>子Agent委托</td>
+<td>~300 行</td>
+</tr>
+<tr>
+<td>s05</td>
+<td>技能/规则注入</td>
+<td>~350 行</td>
+</tr>
+<tr>
+<td>s06</td>
+<td>三层上下文压缩</td>
+<td>~400 行</td>
+</tr>
+<tr>
+<td>s07</td>
+<td>文件任务图+DAG</td>
+<td>~350 行</td>
+</tr>
+<tr>
+<td>s08</td>
+<td>后台并发</td>
+<td>~350 行</td>
+</tr>
+<tr>
+<td>s09</td>
+<td>Agent团队</td>
+<td>~450 行</td>
+</tr>
+<tr>
+<td>s10</td>
+<td>团队协议</td>
+<td>~450 行</td>
+</tr>
+<tr>
+<td>s11</td>
+<td>自主Agent</td>
+<td>~500 行</td>
+</tr>
+<tr>
+<td>s12</td>
+<td>Git隔离</td>
+<td>~550 行</td>
+</tr>
+</tbody>
+</table>
+<p><strong>从 100 行到完整的多 Agent 系统，这就是 Claude Code
+的核心架构！</strong></p>
+<h2 id="源码映射-11">源码映射</h2>
+<table>
+<thead>
+<tr>
+<th>蒸馏版</th>
+<th>Claude Code 原版</th>
+<th>原始行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WorktreeManager</code></td>
+<td><code>utils/worktree.ts</code></td>
+<td>1,519 行</td>
+</tr>
+<tr>
+<td><code>worktree_create</code></td>
+<td><code>EnterWorktreeTool/</code></td>
+<td>127 行</td>
+</tr>
+<tr>
+<td><code>worktree_run</code></td>
+<td><code>execInWorktree()</code></td>
+<td>80 行</td>
+</tr>
+<tr>
+<td><code>worktree_remove</code></td>
+<td><code>ExitWorktreeTool/</code></td>
+<td>300 行</td>
+</tr>
+<tr>
+<td>事件日志</td>
+<td><code>events.jsonl</code></td>
+<td>40 行</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td></td>
+<td><strong>2,126 → ~550 行 (3.9:1)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="动手试试-11">动手试试</h2>
+<div class="sourceCode" id="cb73"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> tsx src/s12_worktree.ts</span></code></pre></div>
+<p>注意：需要在 Git 仓库中运行。试试： -
+<code>创建一个任务和对应的 worktree</code> -
+<code>在 worktree 中创建文件</code> - <code>完成后清理 worktree</code> -
+输入 <code>wt</code> 查看活跃的 worktree - 输入 <code>tasks</code>
+查看任务状态</p>
+<h2 id="小测验-11">小测验</h2>
+<ol type="1">
+<li><strong>Git Worktree 和 Git Branch 有什么区别？</strong> Branch
+不够吗？</li>
+<li><strong>如果 worktree
+中的修改需要合并回主分支，怎么做？</strong></li>
+<li><strong>为什么不用 Docker 容器做隔离？</strong> Worktree
+有什么优势？</li>
+</ol>
+<hr />
+<h2 id="恭喜你已经完成了全部-12-个阶段的学习">恭喜！你已经完成了全部 12
+个阶段的学习！</h2>
+<p>从一个简单的 <code>while(true)</code> 循环到完整的多 Agent
+协作系统，你已经理解了 Claude Code 50 万行代码的核心架构。</p>
+<blockquote>
+<p>回到 <a href="../../README.md">README</a> | 查看 <a
+href="../architecture.md">架构文档</a> | 查看 <a
+href="../source-mapping.md">源码映射</a></p>
+</blockquote>
+<h1 id="架构说明">架构说明</h1>
+<blockquote>
+<p>把 50 万行的大象装进 4000 行的冰箱里——来看看怎么做到的。</p>
+</blockquote>
+<figure>
+<img src="comics/comic_s00_overview.png" alt="总览" />
+<figcaption aria-hidden="true">总览</figcaption>
+</figure>
+<h2 id="白话版claude-code-是怎么工作的">白话版：Claude Code
+是怎么工作的？</h2>
+<p>想象你雇了一个超级聪明的助手（AI模型）来帮你编程：</p>
+<ol type="1">
+<li><strong>你说</strong>：“帮我修复这个 bug”</li>
+<li><strong>助手想</strong>：我需要先看看代码 → 调用 Read 工具</li>
+<li><strong>系统执行</strong> Read 工具，把代码给助手看</li>
+<li><strong>助手想</strong>：找到 bug 了，需要改这里 → 调用 Edit
+工具</li>
+<li><strong>系统执行</strong> Edit 工具，修改文件</li>
+<li><strong>助手说</strong>：“搞定了！这是我做的修改…”</li>
+</ol>
+<p>这个过程就是一个<strong>循环</strong>——不断地”想→用工具→看结果→再想”，直到问题解决。</p>
+<p>Claude Code 的 50
+万行代码，本质上就是让这个循环跑得更好、更安全、更智能。</p>
+<h2 id="claude-code-原版架构-512664-行">Claude Code 原版架构 (512,664
+行)</h2>
+<pre><code>claude-code-main/src/
+├── query.ts              # 核心循环 (1730 lines) — 调用模型 → 处理工具 → 循环
+├── tools.ts              # 工具注册中心 (450 lines)
+├── tools/                # 30+ 工具实现 (~15,000 lines total)
+│   ├── BashTool/         # 650 lines
+│   ├── EditTool/         # 460 lines
+│   ├── AgentTool/        # 1397 lines (子Agent)
+│   └── ...
+├── services/
+│   ├── compact/          # 上下文压缩 (3960 lines)
+│   │   ├── microCompact.ts
+│   │   ├── autoCompact.ts
+│   │   └── compact.ts
+│   ├── prompt/           # 系统提示构建 (2000+ lines)
+│   └── api/              # API 客户端 (3420 lines)
+├── utils/
+│   ├── tasks.ts          # 任务管理 (862 lines)
+│   ├── worktree.ts       # Git Worktree (1519 lines)
+│   └── swarm/            # 多Agent协作 (3000+ lines)
+│       ├── inProcessRunner.ts  # 进程内运行
+│       └── messages.ts         # 消息总线
+└── coordinator/          # 协调模式 (369 lines)</code></pre>
+<h2 id="miniclaudecode-蒸馏架构-4250-行">miniclaudecode 蒸馏架构 (~4,250
+行)</h2>
+<pre><code>src/
+├── s01_agent_loop.ts      # while(true) + Bash                     ~100 lines
+├── s02_tools.ts           # dispatch map + 4 tools                 ~200 lines
+├── s03_todo.ts            # TodoWrite + plan-first                 ~250 lines
+├── s04_subagent.ts        # Task tool + isolated messages[]        ~300 lines
+├── s05_skills.ts          # SKILL.md + AGENTS.md loading           ~350 lines
+├── s06_compact.ts         # micro/auto/manual compaction           ~400 lines
+├── s07_tasks.ts           # TaskManager + DAG dependencies         ~350 lines
+├── s08_background.ts      # spawn + notification queue             ~350 lines
+├── s09_teams.ts           # TeammateManager + JSONL mailbox        ~450 lines
+├── s10_protocols.ts       # request-response + protocolTracker     ~450 lines
+├── s11_autonomous.ts      # IDLE→SCAN→CLAIM state machine          ~500 lines
+└── s12_worktree.ts        # WorktreeManager + EventBus             ~550 lines</code></pre>
+<h2 id="核心数据流">核心数据流</h2>
+<pre><code>用户输入
+  │
+  ▼
+┌──────────────┐     ┌──────────────┐
+│ System Prompt │ ──→ │ Claude API   │
+│ + Skills     │     │ (streaming)  │
+│ + Rules      │     └──────┬───────┘
+└──────────────┘            │
+                            ▼
+                    ┌───────────────┐
+                    │ stop_reason?  │
+                    └───────┬───────┘
+                    ┌───────┼───────┐
+                    │               │
+              tool_use          end_turn
+                    │               │
+                    ▼               ▼
+            ┌──────────────┐   输出文本
+            │ Dispatch Map │   结束循环
+            │ tool → handler│
+            └──────┬───────┘
+                   │
+         ┌─────────┼─────────────┐
+         │         │             │
+     直接执行    子Agent       后台执行
+    (Bash/Read  (独立msgs[])  (spawn)
+     /Write/    返回摘要      通知队列
+     Edit)                   └──→ 注入
+         │         │             │
+         └─────────┼─────────────┘
+                   │
+                   ▼
+         tool_result → messages[]
+                   │
+           ┌───────┴────────┐
+           │ microCompact   │ Layer 1: 替换旧结果
+           │ autoCompact    │ Layer 2: 超阈值摘要
+           │ manualCompact  │ Layer 3: 用户触发
+           └───────┬────────┘
+                   │
+                   ▼
+              回到循环顶部</code></pre>
+<h2 id="多-agent-架构-s09-s12">多 Agent 架构 (s09-s12)</h2>
+<pre><code>                    ┌─────────┐
+                    │  Lead   │
+                    │ Agent   │
+                    └────┬────┘
+                  ┌──────┼──────┐
+          ┌───────┴┐  ┌──┴───┐  ┌┴───────┐
+          │Worker 1│  │Worker2│  │Worker 3│
+          │  loop  │  │ loop │  │  loop  │
+          └───┬────┘  └──┬───┘  └──┬─────┘
+              │          │         │
+         ┌────┴──────────┴─────────┴────┐
+         │        Message Bus           │
+         │   .team/inbox/*.jsonl        │
+         └────────┬─────────────────────┘
+                  │
+         ┌────────┴────────────┐
+         │    Task Board       │
+         │  .tasks/task_*.json │
+         │    DAG 依赖图       │
+         └────────┬────────────┘
+                  │
+         ┌────────┴────────────┐
+         │   Worktree Pool     │
+         │  git worktree add   │
+         │  每任务一个隔离目录   │
+         └─────────────────────┘</code></pre>
+<h2 id="白话版单-agent-的数据流">白话版：单 Agent 的数据流</h2>
+<p>用最简单的话解释数据流图：</p>
+<ol type="1">
+<li><strong>用户输入</strong> → 变成一条消息</li>
+<li><strong>系统提示词 + 技能 + 规则</strong> → 告诉 AI
+“你是谁、能做什么”</li>
+<li><strong>调用 Claude API</strong> → AI 看了所有消息，决定做什么</li>
+<li><strong>AI 有两个选择</strong>：
+<ul>
+<li>“我要用工具” → 查分发表找到对应的处理函数去执行</li>
+<li>“我说完了” → 输出文字，循环结束</li>
+</ul></li>
+<li><strong>工具结果</strong> → 加入消息历史</li>
+<li><strong>三层压缩</strong> → 旧消息太多就自动压缩</li>
+<li><strong>回到步骤 3</strong> → 继续循环</li>
+</ol>
+<h2 id="白话版多-agent-的架构">白话版：多 Agent 的架构</h2>
+<figure>
+<img src="comics/comic_s09_teams.png" alt="Agent团队" />
+<figcaption aria-hidden="true">Agent团队</figcaption>
+</figure>
+<p>就像一个开发团队： - <strong>队长（Lead
+Agent）</strong>：接收用户需求，分配任务给队员 -
+<strong>队员（Worker）</strong>：各自独立工作，通过”邮箱”（JSONL
+文件）互相通信 - <strong>任务板（Task
+Board）</strong>：<code>.tasks/</code>
+目录，记录所有任务的状态和依赖关系 -
+<strong>独立工位（Worktree）</strong>：每个队员在自己的 Git
+工作目录里改代码，互不干扰</p>
+<h2 id="蒸馏原则">蒸馏原则</h2>
+<ol type="1">
+<li><strong>保留模式，移除复杂度</strong>：原版的 try-catch
+链、重试、容错有数千行——蒸馏后保留核心模式，用简单 try-catch 替代</li>
+<li><strong>合并分层</strong>：原版的 Tool 接口有
+checkPermissions/getInputSchema/call 等多个方法——蒸馏为一个 handler
+函数</li>
+<li><strong>内联依赖</strong>：原版通过 DI 注入
+QueryEngine、PermissionManager 等——蒸馏为模块级变量</li>
+<li><strong>同文件原则</strong>：每个阶段是一个完整可运行的 .ts
+文件，便于理解全局</li>
+</ol>
+<h1 id="蒸馏方法论-distillation-guide">蒸馏方法论 (Distillation
+Guide)</h1>
+<figure>
+<img src="comics/comic_s01_agent_loop.png" alt="核心循环" />
+<figcaption aria-hidden="true">核心循环</figcaption>
+</figure>
+<h2 id="什么是蒸馏">什么是”蒸馏”？</h2>
+<blockquote>
+<p>你有一本 500 页的教科书，但期末考试只考核心内容。你把重点整理成 12
+页笔记——这就是蒸馏。</p>
+</blockquote>
+<p>蒸馏 (Distillation)
+是从复杂系统中提取核心模式的过程。就像从一瓶酒中蒸馏出酒精——去掉水分、杂质，保留精华。</p>
+<pre><code>Claude Code (512,664 行)
+    │
+    │  蒸馏过程
+    │  - 去掉错误处理的冗余层
+    │  - 合并抽象层次
+    │  - 内联依赖注入
+    │  - 保留核心算法模式
+    │
+    ▼
+miniclaudecode (~4,250 行)
+    每一行都对应原版的核心逻辑</code></pre>
+<h2 id="蒸馏步骤">蒸馏步骤</h2>
+<h3 id="step-1-找到核心循环">Step 1: 找到核心循环</h3>
+<p>一切 AI Agent 的核心是同一个循环：</p>
+<div class="sourceCode" id="cb79"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="kw">true</span>) {</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> <span class="cf">await</span> <span class="fu">callModel</span>(messages)<span class="op">;</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (response<span class="op">.</span><span class="at">stop_reason</span> <span class="op">!==</span> <span class="st">&quot;tool_use&quot;</span>) <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  results <span class="op">=</span> <span class="cf">await</span> <span class="fu">executeTools</span>(response<span class="op">.</span><span class="at">tool_calls</span>)<span class="op">;</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">.</span><span class="fu">push</span>(results)<span class="op">;</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>原版在 <code>query.ts</code> 用了 1730
+行来做这件事（加上重试、流式、错误处理、hooks）。蒸馏后只需 ~20 行。</p>
+<h3 id="step-2-识别工具模式">Step 2: 识别工具模式</h3>
+<p>原版的每个工具都是一个类，有
+<code>getInputSchema()</code>、<code>checkPermissions()</code>、<code>call()</code>
+等方法。蒸馏发现核心模式其实是：</p>
+<div class="sourceCode" id="cb80"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> HANDLERS<span class="op">:</span> <span class="bu">Record</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> (input<span class="op">:</span> <span class="dt">any</span>) <span class="kw">=&gt;</span> <span class="dt">string</span><span class="op">&gt;</span> <span class="op">=</span> {</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  Bash<span class="op">:</span> (i) <span class="kw">=&gt;</span> <span class="fu">execSync</span>(i<span class="op">.</span><span class="at">command</span>)<span class="op">,</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  Read<span class="op">:</span> (i) <span class="kw">=&gt;</span> <span class="fu">readFileSync</span>(i<span class="op">.</span><span class="at">path</span>)<span class="op">,</span></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ...</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p>一个 dispatch map 就够了。</p>
+<h3 id="step-3-提取状态管理">Step 3: 提取状态管理</h3>
+<p>原版有复杂的 AppState、Redux-like
+状态管理。蒸馏后发现核心状态就是：</p>
+<ul>
+<li><code>messages[]</code> — 对话历史</li>
+<li><code>todos[]</code> — 任务列表</li>
+<li><code>tasks/</code> — 持久化任务文件</li>
+<li><code>.team/inbox/</code> — 团队消息</li>
+</ul>
+<h3 id="step-4-分层递增">Step 4: 分层递增</h3>
+<p>把功能按依赖关系排列，每层只加一个新概念：</p>
+<pre><code>s01: while + tool        (基础)
+s02: + dispatch map      (扩展)
+s03: + planning          (规划)
+s04: + delegation        (委托)
+s05: + knowledge         (知识)
+s06: + memory mgmt       (记忆)
+s07: + task graph         (任务)
+s08: + concurrency        (并发)
+s09: + multi-agent       (团队)
+s10: + negotiation       (协商)
+s11: + autonomy          (自主)
+s12: + isolation         (隔离)</code></pre>
+<h2 id="蒸馏比例">蒸馏比例</h2>
+<p>不同模块的蒸馏难度不同：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>原版行数</th>
+<th>蒸馏行数</th>
+<th>蒸馏比</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent Loop</td>
+<td>1,825</td>
+<td>100</td>
+<td>18:1</td>
+<td>核心模式极简，大量是错误处理</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>2,320</td>
+<td>200</td>
+<td>11.6:1</td>
+<td>类→函数，移除权限层</td>
+</tr>
+<tr>
+<td>Compact</td>
+<td>2,786</td>
+<td>400</td>
+<td>7:1</td>
+<td>三层策略明确，简化 token 计算</td>
+</tr>
+<tr>
+<td>Autonomous</td>
+<td>795</td>
+<td>500</td>
+<td>1.6:1</td>
+<td>逻辑本身就紧凑</td>
+</tr>
+</tbody>
+</table>
+<h2 id="你能学到什么">你能学到什么？</h2>
+<p>通过蒸馏学习，你会理解：</p>
+<ol type="1">
+<li><strong>大型系统的核心往往很小</strong> — 500K 行的核心循环就 20
+行</li>
+<li><strong>抽象是为了扩展</strong> —
+原版的类层次为了插件系统，教学可以用函数</li>
+<li><strong>状态管理是关键</strong> — 理解 messages[]、tasks、inbox
+的数据流</li>
+<li><strong>并发用消息传递</strong> — 不共享内存，用文件邮箱通信</li>
+<li><strong>隔离用 worktree</strong> — Git 原生支持并行工作目录</li>
+</ol>
+<h2 id="如何自己蒸馏一个系统">如何自己蒸馏一个系统？</h2>
+<figure>
+<img src="comics/comic_s02_tools.png" alt="工具系统" />
+<figcaption aria-hidden="true">工具系统</figcaption>
+</figure>
+<ol type="1">
+<li><strong>找到入口点</strong> — 哪个函数启动了一切？（比如 Claude Code
+的 <code>query.ts:queryLoop</code>）</li>
+<li><strong>画调用图</strong> — 入口函数调用了哪些函数？</li>
+<li><strong>识别核心 vs 基础设施</strong> —
+重试逻辑不是核心，循环结构是核心</li>
+<li><strong>提取类型</strong> — 核心数据结构是什么样的？</li>
+<li><strong>从最小可运行版本开始</strong> —
+先让最简版本跑起来（就像我们的 s01，100 行就够）</li>
+<li><strong>每次加一个功能</strong> —
+每加一个功能就对照原版理解为什么需要它</li>
+</ol>
+<h3 id="实际例子蒸馏-claude-code-的上下文压缩">实际例子：蒸馏 Claude
+Code 的上下文压缩</h3>
+<p><strong>原版</strong>（2,786 行）做了什么？ - 精确的 token 计数（用
+tiktoken 库） - 多种压缩策略（按消息类型、按工具类型） -
+压缩后的质量评估 - 压缩历史追踪 - 错误恢复机制 - 单元测试</p>
+<p><strong>蒸馏版</strong>（400 行）保留了什么？ - 简单的 token
+估算（JSON 长度 / 4） - 三层压缩策略（保留了核心思想） - 磁盘持久化 -
+模型生成摘要</p>
+<p><strong>去掉了什么？</strong> - 精确 token 计数（教学不需要 100%
+精确） - 多种压缩策略（保留三层足够理解） - 质量评估（教学不需要） -
+错误恢复（简单 try-catch 够了）</p>
+<blockquote>
+<p>蒸馏的关键：<strong>问”这段代码是为了实现核心功能，还是为了处理边界情况？“</strong>
+如果是边界情况，教学版可以跳过。</p>
+</blockquote>
+<h1 id="对比分析">对比分析</h1>
+<blockquote>
+<p>市面上有好几个”简化版 Claude Code”项目，我们和它们有什么不同？</p>
+</blockquote>
+<figure>
+<img src="comics/comic_s05_skills.png" alt="技能注入" />
+<figcaption aria-hidden="true">技能注入</figcaption>
+</figure>
+<h2 id="现有-claude-code-蒸馏复现项目">现有 Claude Code
+蒸馏/复现项目</h2>
+<h3 id="miniclaudecode_typescript-本项目">1. miniclaudecode_typescript
+(本项目)</h3>
+<ul>
+<li><strong>语言</strong>: TypeScript</li>
+<li><strong>方法</strong>: 直接从 Claude Code v2.1.88 源码蒸馏</li>
+<li><strong>阶段</strong>: 12 个渐进式阶段</li>
+<li><strong>代码量</strong>: ~4,250 行 (不含 core/ 和 tools/
+共享模块)</li>
+<li><strong>独特优势</strong>: 源码映射表、哆啦A梦漫画教学、原生
+TypeScript</li>
+</ul>
+<h3 id="learn-claude-code-python-45k-stars">2. learn-claude-code
+(Python, 45K+ stars)</h3>
+<ul>
+<li><strong>语言</strong>: Python</li>
+<li><strong>方法</strong>: 从行为推断 + 后期源码验证</li>
+<li><strong>阶段</strong>: 12 个阶段 (s01-s12)</li>
+<li><strong>代码量</strong>: ~3,400 行 Python</li>
+<li><strong>优势</strong>: 社区大、教程完善</li>
+<li><strong>劣势</strong>: Python 与原版 TypeScript
+不同语言，存在翻译偏差</li>
+</ul>
+<h3 id="cc-mini-typescript-800-行">3. cc-mini (TypeScript, 800 行)</h3>
+<ul>
+<li><strong>语言</strong>: TypeScript</li>
+<li><strong>方法</strong>: 参考文档实现最小版本</li>
+<li><strong>阶段</strong>: 1 个 (单文件)</li>
+<li><strong>代码量</strong>: ~800 行</li>
+<li><strong>优势</strong>: 极简、单文件</li>
+<li><strong>劣势</strong>: 无渐进式学习、无高级功能</li>
+</ul>
+<h3 id="claudelite-python-600-行">4. ClaudeLite (Python, 600 行)</h3>
+<ul>
+<li><strong>语言</strong>: Python</li>
+<li><strong>方法</strong>: 参考文档实现</li>
+<li><strong>阶段</strong>: 1 个</li>
+<li><strong>代码量</strong>: ~600 行</li>
+<li><strong>优势</strong>: 简洁</li>
+<li><strong>劣势</strong>: Python、无高级功能</li>
+</ul>
+<h3 id="start-claude-code">5. start-claude-code</h3>
+<ul>
+<li><strong>语言</strong>: TypeScript</li>
+<li><strong>方法</strong>: 开箱即用封装</li>
+<li><strong>重点</strong>: 快速启动，非教学</li>
+</ul>
+<h2 id="功能对比矩阵">功能对比矩阵</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th style="text-align: center;">miniclaudecode</th>
+<th style="text-align: center;">learn-claude-code</th>
+<th style="text-align: center;">cc-mini</th>
+<th style="text-align: center;">ClaudeLite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent Loop</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>多工具 dispatch</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>流式输出</td>
+<td style="text-align: center;">✅*</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>TodoWrite</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>子 Agent</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>技能注入</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>上下文压缩</td>
+<td style="text-align: center;">✅ (三层)</td>
+<td style="text-align: center;">✅ (双层)</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>文件任务图</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>后台任务</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Agent 团队</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>团队协议</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>自主 Agent</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Git Worktree</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>源码映射</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>教学漫画</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>TypeScript 原生</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+<p>*s05 使用非流式 API 保持简洁，生产版可切换流式</p>
+<h2 id="独家优势详解">独家优势详解</h2>
+<h3 id="源码映射-source-mapping">源码映射 (Source Mapping)</h3>
+<p>本项目每个阶段的代码注释都标注了对应的 Claude Code
+原始文件和行号：</p>
+<div class="sourceCode" id="cb82"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * SOURCE MAPPING:</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="co"> *   services/compact/microCompact.ts (530行) → microCompact() 这里</span></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="co"> *   services/compact/autoCompact.ts (351行) → autoCompact() 这里</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span></code></pre></div>
+<p>这让你可以直接对照原版源码理解蒸馏过程。其他项目都没有这个。</p>
+<h3 id="同语言蒸馏">同语言蒸馏</h3>
+<p>Claude Code 是 TypeScript 写的。用 TypeScript 蒸馏意味着：</p>
+<ul>
+<li>类型完全一致 (Anthropic SDK 的类型)</li>
+<li>模块模式一致 (ES modules)</li>
+<li>运行时一致 (Node.js)</li>
+<li>API 调用方式一致</li>
+</ul>
+<p>Python 蒸馏会引入语言差异，无法直接对照原版。</p>
+<h3 id="三层压缩-vs-双层压缩">三层压缩 vs 双层压缩</h3>
+<figure>
+<img src="comics/comic_s06_compact.png" alt="三层压缩" />
+<figcaption aria-hidden="true">三层压缩</figcaption>
+</figure>
+<p>learn-claude-code 实现了 micro + manual
+两层。本项目实现了完整的三层：</p>
+<ol type="1">
+<li><strong>microCompact</strong> — 被动，每轮自动替换旧结果</li>
+<li><strong>autoCompact</strong> — 自动，token 超阈值时触发摘要</li>
+<li><strong>manualCompact</strong> —
+手动，用户/工具显式触发完整压缩</li>
+</ol>
+<h3 id="教学漫画">教学漫画</h3>
+<p>本项目配套 13
+张哆啦A梦风格中文教学漫画，覆盖每个阶段的核心概念。用漫画辅助理解技术概念，降低学习门槛。其他项目均无此特色。</p>
+<h3 id="在线文档">在线文档</h3>
+<p>通过 Docsify
+搭建的在线阅读站，支持搜索、代码高亮、侧边栏导航，方便随时随地学习。访问地址：<a
+href="https://bcefghj.github.io/miniclaudecode_typescript/">https://bcefghj.github.io/miniclaudecode_typescript/</a></p>
+</body>
+</html>

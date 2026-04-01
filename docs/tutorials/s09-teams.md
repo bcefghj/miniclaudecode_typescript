@@ -1,6 +1,6 @@
 # s09 Agent团队 — 多Agent协作
 
-![s09 Agent团队](../../comics/comic_s09_teams.png)
+![s09 Agent团队](../comics/comic_s09_teams.png)
 
 ## 这一节学什么？
 

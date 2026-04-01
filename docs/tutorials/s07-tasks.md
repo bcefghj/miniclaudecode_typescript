@@ -1,6 +1,6 @@
 # s07 文件任务图 — DAG 依赖管理
 
-![s07 文件任务图](../../comics/comic_s07_tasks.png)
+![s07 文件任务图](../comics/comic_s07_tasks.png)
 
 ## 这一节学什么？
 

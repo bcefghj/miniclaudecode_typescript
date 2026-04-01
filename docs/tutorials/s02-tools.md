@@ -1,6 +1,6 @@
 # s02 工具系统 — 四个工具搞定 90% 编程任务
 
-![s02 工具系统](../../comics/comic_s02_tools.png)
+![s02 工具系统](../comics/comic_s02_tools.png)
 
 ## 这一节学什么？
 

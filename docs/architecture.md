@@ -2,7 +2,7 @@
 
 > 把 50 万行的大象装进 4000 行的冰箱里——来看看怎么做到的。
 
-![总览](../comics/comic_s00_overview.png)
+![总览](comics/comic_s00_overview.png)
 
 ## 白话版：Claude Code 是怎么工作的？
 
@@ -158,7 +158,7 @@ src/
 
 ## 白话版：多 Agent 的架构
 
-![Agent团队](../comics/comic_s09_teams.png)
+![Agent团队](comics/comic_s09_teams.png)
 
 就像一个开发团队：
 - **队长（Lead Agent）**：接收用户需求，分配任务给队员

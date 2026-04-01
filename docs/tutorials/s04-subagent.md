@@ -1,6 +1,6 @@
 # s04 子Agent委托 — 独立上下文的任务分发
 
-![s04 子Agent委托](../../comics/comic_s04_subagent.png)
+![s04 子Agent委托](../comics/comic_s04_subagent.png)
 
 ## 这一节学什么？
 

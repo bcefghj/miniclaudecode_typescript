@@ -1,6 +1,6 @@
 # s11 自主Agent — 不用指派，自己找活干
 
-![s11 自主Agent](../../comics/comic_s11_autonomous.png)
+![s11 自主Agent](../comics/comic_s11_autonomous.png)
 
 ## 这一节学什么？
 

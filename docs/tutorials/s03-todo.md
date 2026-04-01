@@ -1,6 +1,6 @@
 # s03 先计划再执行 — TodoWrite 计划工具
 
-![s03 先计划再执行](../../comics/comic_s03_todo.png)
+![s03 先计划再执行](../comics/comic_s03_todo.png)
 
 ## 这一节学什么？
 

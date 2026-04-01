@@ -1,6 +1,6 @@
 # s08 后台并发 — 边等边干别的
 
-![s08 后台并发](../../comics/comic_s08_background.png)
+![s08 后台并发](../comics/comic_s08_background.png)
 
 ## 这一节学什么？
 
