@@ -1,0 +1,29 @@
+{
+  "name": "miniclaudecode_typescript",
+  "version": "1.0.0",
+  "description": "Claude Code distilled into ~800 lines of TypeScript — a progressive learning framework",
+  "type": "module",
+  "main": "dist/v4_full_agent.js",
+  "bin": {
+    "minicc": "dist/v4_full_agent.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "v0": "npx tsx src/v0_bash_agent.ts",
+    "v1": "npx tsx src/v1_basic_agent.ts",
+    "v2": "npx tsx src/v2_streaming_agent.ts",
+    "v3": "npx tsx src/v3_subagent.ts",
+    "v4": "npx tsx src/v4_full_agent.ts"
+  },
+  "keywords": ["claude-code", "agent", "distillation", "typescript", "ai"],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "chalk": "^5.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0"
+  }
+}
